@@ -88,3 +88,25 @@ jobs:
         run: |
           helm dependency update
           helm lint . -f ../values.example.yaml
+
+  shell_bundle:
+    name: Shell bundle stats
+    needs: node
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build shell bundle with analyzer
+        run: ANALYZE=true pnpm --filter @repo/shell build
+      - name: Upload analyzer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shell-bundle-analyzer
+          path: apps/shell/.next/analyze

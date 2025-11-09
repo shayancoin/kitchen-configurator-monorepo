@@ -65,6 +65,24 @@ const stats: TeslaSectionStat[] = [
 const ShellPage = () => {
   useEffect(() => {
     initPerfBudget();
+
+    let cleanup: (() => void) | undefined;
+    const loadWebVitals = () =>
+      import("@/lib/webVitals")
+        .then(({ bootShellWebVitals }) => {
+          cleanup = bootShellWebVitals();
+        })
+        .catch((error) => {
+          console.error("[perf] failed to bootstrap web-vitals", error);
+        });
+
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(loadWebVitals);
+    } else {
+      window.setTimeout(loadWebVitals, 0);
+    }
+
+    return () => cleanup?.();
   }, []);
 
   return (
