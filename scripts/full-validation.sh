@@ -29,11 +29,10 @@ run_go_tests() {
   echo "[validation] go test services/$svc"
   if [[ "$UNAME" == "Darwin" ]]; then
     if command -v docker >/dev/null 2>&1; then
-      docker run --rm \
-        -v "$ROOT_DIR":/workspace \
-        -w "/workspace/services/$svc" \
-        "$GO_DOCKER_IMAGE" \
-        bash -lc "go test ./..."
+      (
+        cd "$ROOT_DIR/services/$svc"
+        "$ROOT_DIR/scripts/go-test-linux.sh"
+      )
     else
       echo "[validation] skipping Go tests for $svc (Docker required on macOS to avoid LC_UUID bug)" >&2
     fi
