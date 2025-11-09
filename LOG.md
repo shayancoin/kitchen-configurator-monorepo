@@ -43,3 +43,7 @@
 | 2025-11-09T15:22:00Z | Step 14 – Phase prep | Authored `scripts/phase-prep.sh`, created `feature/phase-{1..7}` branches off `pr-000-monorepo-baseline`, and documented the DAG in `docs/phase-plan.md`. |
 | 2025-11-09T15:25:00Z | Step 15 – Repo tree & hooks | Generated `docs/repo-tree.md` (depth≤2) and sprinkled `// EXTEND_AI_HERE` anchors (Local panel, AI advisor, viewer2d WebGPU) for future CSP/AI extensions. |
 | 2025-11-09T15:27:00Z | Go test workaround | Updated `scripts/full-validation.sh` to execute Go unit tests inside `golang:1.22.2` on macOS so the LC_UUID issue no longer blocks validation. |
+| 2025-11-09T21:27:08Z | Step 13 completion | step-13 complete: budgets enforced; analyzer artifacts uploaded. |
+| 2025-11-09T21:27:09Z | Step 14 completion | step-14 complete: phase branches seeded. |
+| 2025-11-09T21:27:10Z | Step 15 completion | step-15 complete: hooks placed; window.tesla contract live. |
+| 2025-11-09T21:27:11Z | PR-001 infra | pr-001-infra CI added; plan conditional; otel tail-sampling. |
