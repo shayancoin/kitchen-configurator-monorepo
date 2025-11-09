@@ -100,6 +100,7 @@
     - app/
     - components/
     - lib/
+    - styles/
     - module-federation.d.ts
     - next-env.d.ts
     - next.config.ts
@@ -172,6 +173,7 @@
   - mdx-components.tsx
   - next.config.mjs
   - observability.md
+  - perf-proof.md
   - package.json
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
@@ -364,6 +366,7 @@
     - tsconfig.json
   - tests-fusion/
     - package.json
+    - perf/
     - src/
     - stubs/
     - tsconfig.json
@@ -375,6 +378,7 @@
     - package.json
     - react-library.json
   - ui-tesla/
+    - global.d.ts
     - package.json
     - src/
     - tsconfig.json
@@ -388,9 +392,11 @@
 - pnpm-workspace.yaml
 - scripts/
   - ensure-mf-shim.cjs
+  - go-test-linux.sh
   - full-validation.sh
   - index.ts
   - initialize.ts
+  - k6-smoke.js
   - mf-remotes.json
   - new-pr.sh
   - update.ts

@@ -19,16 +19,15 @@ export type TeslaThemeProviderProperties = {
   readonly contracts?: Partial<TeslaComponentContracts>;
 };
 
-declare global {
-  interface Window {
-    tesla?: TeslaGlobalContract;
-  }
-}
-
 export type TeslaPerfMetrics = {
   readonly tti?: number;
   readonly lcp?: number;
   readonly fid?: number;
+};
+
+export type TeslaPerfBudgetState = {
+  readonly failed: boolean;
+  readonly reasons: readonly string[];
 };
 
 export type TeslaGlobalContract = {
@@ -36,6 +35,7 @@ export type TeslaGlobalContract = {
   readonly tokens: TeslaTokens;
   readonly components: TeslaComponentContracts;
   readonly metrics?: TeslaPerfMetrics;
+  readonly perfBudget?: TeslaPerfBudgetState;
 };
 
 export const TeslaThemeProvider = ({
@@ -70,7 +70,8 @@ export const TeslaThemeProvider = ({
       version: "ds-1.1",
       tokens: mergedTokens,
       components: mergedContracts,
-      metrics: window.tesla?.metrics
+      metrics: window.tesla?.metrics,
+      perfBudget: window.tesla?.perfBudget
     };
   }, [mergedTokens, mergedContracts]);
 

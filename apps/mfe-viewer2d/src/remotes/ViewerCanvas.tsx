@@ -112,6 +112,7 @@ const ViewerCanvas = () => {
 
         const context = canvasRef.current?.getContext("2d");
         context?.putImageData(imageData, 0, 0);
+        // EXTEND_AI_HERE: post-compose hook (overlay AI annotations / heatmaps).
         setDuration(elapsed);
         setStatus("ready");
       } catch (cause) {

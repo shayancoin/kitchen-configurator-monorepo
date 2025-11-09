@@ -59,6 +59,7 @@ def _build_pipeline() -> RAGPipeline:
     store = build_store(dsn=settings.vector_dsn, table=settings.vector_table, dim=dim)
     llm = _build_llm(settings)
     label = "echo" if isinstance(llm, EchoLLM) else "openai"
+    # // EXTEND_AI_HERE: pre-reranker hook (mutate embeddings/vector-store strategy).
     pipeline = RAGPipeline(
         vector_store=store,
         embedder=embedder,
@@ -66,6 +67,7 @@ def _build_pipeline() -> RAGPipeline:
         default_k=settings.top_k,
         generator_label=label,
     )
+    # // EXTEND_AI_HERE: post-reranker hook (stream rerank traces to downstream AI features).
     return pipeline
 
 

@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Universal Sans Display";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Universal Sans Display"),
+    local("UniversalSansDisplay"),
+    url("https://assets.tesla.com/static/fonts/UniversalSans-Display.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Universal Sans Text";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Universal Sans Text"),
+    local("UniversalSansText"),
+    url("https://assets.tesla.com/static/fonts/UniversalSans-Text.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Universal Sans Text";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Universal Sans Text Medium"),
+    local("UniversalSansText-Medium"),
+    url("https://assets.tesla.com/static/fonts/UniversalSans-TextMedium.woff2") format("woff2");
+}
