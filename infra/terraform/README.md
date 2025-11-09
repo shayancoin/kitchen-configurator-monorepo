@@ -16,11 +16,11 @@ cd infra/terraform
 export AWS_PROFILE=parviz
 terraform init
 terraform apply \
-  -var aws_region=us-west-2 \
+  -var region=us-west-2 \
   -var env=staging \
   -var domain_name=configurator.example.com \
-  -var graphql_origin_domain=router.internal.example.local \
-  -var acm_certificate_arn=arn:aws:acm:us-east-1:123456789012:certificate/abc...
+  -var graphql_origin=router.internal.example.local \
+  -var acm_cert_arn=arn:aws:acm:us-east-1:123456789012:certificate/abc...
 ```
 
 > The Helm-based modules (`istio`, `otel`) automatically reuse the kubeconfig generated from the freshly created EKS cluster, so Istio/OTel install immediately after the control plane stabilises.

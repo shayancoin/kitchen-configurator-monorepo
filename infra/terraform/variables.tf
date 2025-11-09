@@ -1,6 +1,12 @@
-variable "aws_region" {
+variable "region" {
   description = "AWS region for all infrastructure."
   type        = string
+}
+
+variable "enable_cloudfront" {
+  description = "Toggle CloudFront/S3 distribution provisioning."
+  type        = bool
+  default     = true
 }
 
 variable "env" {
@@ -110,12 +116,12 @@ variable "domain_name" {
   type        = string
 }
 
-variable "graphql_origin_domain" {
-  description = "Internal domain or ALB DNS name for the GraphQL router."
+variable "graphql_origin" {
+  description = "Origin domain or S3/ALB domain handling GraphQL traffic."
   type        = string
 }
 
-variable "acm_certificate_arn" {
+variable "acm_cert_arn" {
   description = "ARN for the ACM certificate used by CloudFront."
   type        = string
 }

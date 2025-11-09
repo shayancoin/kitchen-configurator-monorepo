@@ -38,13 +38,23 @@ output "kafka_bootstrap_brokers" {
   description = "Bootstrap brokers for the pricing/rules event bus."
 }
 
+output "cloudfront_distribution_id" {
+  value       = try(module.s3_cf[0].distribution_id, null)
+  description = "CloudFront distribution ID for the configurator edge."
+}
+
 output "cloudfront_domain" {
-  value       = module.s3_cf.distribution_domain
+  value       = try(module.s3_cf[0].domain_name, null)
   description = "CloudFront distribution domain serving the configurator."
 }
 
+output "cloudfront_apq_cache_policy_id" {
+  value       = try(module.s3_cf[0].apq_cache_policy_id, null)
+  description = "Cache policy identifier used for persisted GraphQL queries."
+}
+
 output "assets_bucket_name" {
-  value       = module.s3_cf.bucket_name
+  value       = try(module.s3_cf[0].bucket_name, null)
   description = "Origin bucket for immutable sprites + persisted queries."
 }
 

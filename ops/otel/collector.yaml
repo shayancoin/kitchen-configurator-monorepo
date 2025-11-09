@@ -27,18 +27,22 @@ processors:
         type: latency
         latency:
           threshold: 300ms
+      - name: probabilistic-sample
+        type: probabilistic
+        probabilistic:
+          sampling_percentage: 5
 
 exporters:
   logging:
-    loglevel: debug
-  otlphttp/prometheus:
-    endpoint: http://prometheus:9090/api/v1/otlp
-  otlphttp/grafana:
-    endpoint: http://tempo:4318/v1/traces
+    loglevel: info
+  otlphttp:
+    endpoint: ${env:OTLP_ENDPOINT}
     tls:
       insecure: true
   prometheusremotewrite:
-    endpoint: http://prometheus:9090/api/v1/write
+    endpoint: ${env:PROM_REMOTE_WRITE_ENDPOINT}
+    tls:
+      insecure: true
 
 connectors:
   spanmetrics:
@@ -58,7 +62,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, tail_sampling, batch]
-      exporters: [otlphttp/grafana, logging, spanmetrics]
+      exporters: [otlphttp, logging, spanmetrics]
     metrics/spanmetrics:
       receivers: [spanmetrics]
-      exporters: [otlphttp/prometheus, prometheusremotewrite]
+      exporters: [otlphttp, prometheusremotewrite]

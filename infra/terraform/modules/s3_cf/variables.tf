@@ -6,11 +6,11 @@ variable "domain_name" {
   type = string
 }
 
-variable "graphql_origin_domain" {
+variable "graphql_origin" {
   type = string
 }
 
-variable "acm_certificate_arn" {
+variable "acm_cert_arn" {
   type = string
 }
 
