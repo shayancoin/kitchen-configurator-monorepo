@@ -74,14 +74,15 @@ module "kafka" {
 }
 
 module "s3_cf" {
-  source                = "./modules/s3_cf"
-  bucket_name           = "${var.env}-parviz-assets"
-  domain_name           = var.domain_name
-  acm_certificate_arn   = var.acm_certificate_arn
-  graphql_origin_domain = var.graphql_origin_domain
-  cache_ttl_seconds     = var.assets_cache_ttl
-  graphql_edge_path     = "/graphql"
-  tags                  = local.base_tags
+  count             = var.enable_cloudfront ? 1 : 0
+  source            = "./modules/s3_cf"
+  bucket_name       = "${var.env}-parviz-assets"
+  domain_name       = var.domain_name
+  acm_cert_arn      = var.acm_cert_arn
+  graphql_origin    = var.graphql_origin
+  cache_ttl_seconds = var.assets_cache_ttl
+  graphql_edge_path = "/graphql"
+  tags              = local.base_tags
 }
 
 # hydrate Kubernetes + Helm providers with cluster outputs

@@ -3,7 +3,7 @@ locals {
     name         = "${var.cluster_identifier}-shard-${shard}"
     modulus      = shard
     capacity     = "serverless-v2"
-    hash_formula = "murmur3(configuration_id) % ${var.shard_count}"
+    hash_formula = "fnv1a64(configuration_id) % ${var.shard_count}"
   }]
 }
 

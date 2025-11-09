@@ -1,0 +1,96 @@
+name: pr-001-infra
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'infra/**'
+      - 'ops/otel/**'
+      - '.github/workflows/pr-001-infra.yml'
+
+jobs:
+  fmt_validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20.18.0' }
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v3
+        with: { terraform_version: 1.9.5 }
+      - name: Format
+        run: terraform fmt -recursive infra/terraform
+      - name: Validate (backend disabled)
+        run: |
+          terraform -chdir=infra/terraform init -backend=false
+          terraform -chdir=infra/terraform validate -no-color
+      - name: Upload fmt/validate logs
+        uses: actions/upload-artifact@v4
+        with: { name: tf-validate, path: infra/terraform/.terraform }
+
+  tflint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: TFLint setup
+        uses: terraform-linters/setup-tflint@v4
+      - run: |
+          tflint --init
+          tflint -f junit -c .tflint.hcl infra/terraform | tee tflint.xml
+      - uses: actions/upload-artifact@v4
+        with: { name: tflint, path: tflint.xml }
+
+  tfsec:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/tfsec-sarif-action@v0.1.5
+        with:
+          tfsec_args: --force-all-dirs --exclude-downloaded-modules infra/terraform
+      - uses: github/codeql-action/upload-sarif@v3
+        with: { sarif_file: tfsec.sarif }
+
+  checkov:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: infra/terraform
+          quiet: true
+          output_format: sarif
+          output_file_path: checkov.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        with: { sarif_file: checkov.sarif }
+
+  plan:
+    if: ${{ secrets.AWS_ROLE_TO_ASSUME != '' && secrets.TF_STATE_BUCKET != '' && secrets.TF_STATE_DDB != '' && secrets.AWS_REGION != '' }}
+    needs: [fmt_validate, tflint, tfsec, checkov]
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with: { terraform_version: 1.9.5 }
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Terraform init (remote backend)
+        run: |
+          cat > infra/terraform/backend.hcl <<'HCL'
+          bucket="${{ secrets.TF_STATE_BUCKET }}"
+          dynamodb_table="${{ secrets.TF_STATE_DDB }}"
+          key="iac/pr-001/terraform.tfstate"
+          region="${{ secrets.AWS_REGION }}"
+          encrypt=true
+          HCL
+          terraform -chdir=infra/terraform init -backend-config=backend.hcl
+      - name: Terraform plan (staging)
+        run: |
+          terraform -chdir=infra/terraform workspace new staging || terraform -chdir=infra/terraform workspace select staging
+          terraform -chdir=infra/terraform plan -var-file=env/staging.tfvars -out plan-staging.bin -input=false
+      - uses: actions/upload-artifact@v4
+        with: { name: tf-plan-staging, path: infra/terraform/plan-staging.bin }

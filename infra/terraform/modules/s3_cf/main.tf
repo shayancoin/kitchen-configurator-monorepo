@@ -67,8 +67,38 @@ resource "aws_s3_bucket_policy" "assets" {
 
 resource "aws_cloudfront_cache_policy" "graphql" {
   name        = "graphql-apq-${replace(var.graphql_edge_path, "/", "")}"
-  default_ttl = 5
-  max_ttl     = 30
+  default_ttl = 120
+  max_ttl     = 600
+  min_ttl     = 0
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    enable_accept_encoding_brotli = true
+    enable_accept_encoding_gzip   = true
+
+    headers_config {
+      header_behavior = "whitelist"
+      headers {
+        items = ["Accept", "Accept-Encoding", "Content-Type"]
+      }
+    }
+
+    query_strings_config {
+      query_string_behavior = "whitelist"
+      query_strings {
+        items = ["extensions", "operationName", "variables"]
+      }
+    }
+
+    cookies_config {
+      cookie_behavior = "none"
+    }
+  }
+}
+
+resource "aws_cloudfront_cache_policy" "assets" {
+  name        = "${var.bucket_name}-immutable"
+  default_ttl = min(var.cache_ttl_seconds, 31536000)
+  max_ttl     = 31536000
   min_ttl     = 0
 
   parameters_in_cache_key_and_forwarded_to_origin {
@@ -80,7 +110,7 @@ resource "aws_cloudfront_cache_policy" "graphql" {
     }
 
     query_strings_config {
-      query_string_behavior = "all"
+      query_string_behavior = "none"
     }
 
     cookies_config {
@@ -103,7 +133,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   origin {
-    domain_name = var.graphql_origin_domain
+    domain_name = var.graphql_origin
     origin_id   = local.graphql_origin_id
 
     custom_origin_config {
@@ -120,7 +150,7 @@ resource "aws_cloudfront_distribution" "this" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     compress               = true
-    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6" # Managed-CachingOptimized
+    cache_policy_id        = aws_cloudfront_cache_policy.assets.id
   }
 
   ordered_cache_behavior {
@@ -133,6 +163,16 @@ resource "aws_cloudfront_distribution" "this" {
     compress               = true
   }
 
+  ordered_cache_behavior {
+    path_pattern           = "assets/*"
+    target_origin_id       = local.asset_origin_id
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    cache_policy_id        = aws_cloudfront_cache_policy.assets.id
+    compress               = true
+  }
+
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -142,7 +182,7 @@ resource "aws_cloudfront_distribution" "this" {
   price_class = "PriceClass_100"
 
   viewer_certificate {
-    acm_certificate_arn      = var.acm_certificate_arn
+    acm_certificate_arn      = var.acm_cert_arn
     minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method       = "sni-only"
   }
