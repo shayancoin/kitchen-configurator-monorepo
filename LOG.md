@@ -43,3 +43,4 @@
 | 2025-11-09T15:22:00Z | Step 14 – Phase prep | Authored `scripts/phase-prep.sh`, created `feature/phase-{1..7}` branches off `pr-000-monorepo-baseline`, and documented the DAG in `docs/phase-plan.md`. |
 | 2025-11-09T15:25:00Z | Step 15 – Repo tree & hooks | Generated `docs/repo-tree.md` (depth≤2) and sprinkled `// EXTEND_AI_HERE` anchors (Local panel, AI advisor, viewer2d WebGPU) for future CSP/AI extensions. |
 | 2025-11-09T15:27:00Z | Go test workaround | Updated `scripts/full-validation.sh` to execute Go unit tests inside `golang:1.22.2` on macOS so the LC_UUID issue no longer blocks validation. |
+| 2025-11-09T16:05:00Z | PR-001 IaC baseline | Added Terraform modules (`network`, `eks`, `aurora`, `redis`, `kafka`, `s3_cf`, `secrets`, `istio`, `otel`), CloudFront APQ caching, Secrets Manager wiring, and tail-sampling OTEL config to satisfy the IaC/Reliability scope. |
