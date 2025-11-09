@@ -1,0 +1,134 @@
+{
+  "summary": {
+    "repoPath": "/tmp/microfrontends-nextjs-pages-federation",
+    "analyzedFiles": 26,
+    "totalNodes": 26,
+    "totalEdges": 1,
+    "maxDepth": 1,
+    "topoOrderSample": [
+      "apps/content/next-env.d.ts",
+      "apps/content/next.config.js",
+      "apps/content/postcss.config.mjs",
+      "apps/content/tailwind.config.ts",
+      "apps/navigation/next-env.d.ts",
+      "apps/navigation/next.config.js",
+      "apps/navigation/postcss.config.mjs",
+      "apps/navigation/tailwind.config.ts",
+      "apps/root/global.d.ts",
+      "apps/root/next-env.d.ts",
+      "apps/root/next.config.js",
+      "apps/root/postcss.config.js",
+      "apps/root/tailwind.config.js",
+      "apps/content/pages/_app.tsx",
+      "apps/content/pages/_document.tsx",
+      "apps/navigation/components/mobile-menu-button.tsx",
+      "apps/navigation/pages/_app.tsx",
+      "apps/navigation/pages/_document.tsx",
+      "apps/root/pages/_app.tsx",
+      "apps/root/pages/_document.tsx",
+      "apps/root/pages/index.tsx",
+      "apps/content/pages/_content/index.tsx",
+      "apps/navigation/pages/_navigation/footer/index.tsx",
+      "apps/navigation/pages/_navigation/header/index.tsx",
+      "packages/eslint-config-custom/next.js"
+    ],
+    "hasCycle": false,
+    "denseModules": [
+      {
+        "file": "apps/root/global.d.ts",
+        "exports": 5,
+        "bodyCount": 5,
+        "density": 1
+      },
+      {
+        "file": "apps/content/pages/_content/index.tsx",
+        "exports": 2,
+        "bodyCount": 2,
+        "density": 1
+      },
+      {
+        "file": "apps/navigation/pages/_navigation/footer/index.tsx",
+        "exports": 2,
+        "bodyCount": 2,
+        "density": 1
+      },
+      {
+        "file": "apps/root/tailwind.config.js",
+        "exports": 1,
+        "bodyCount": 1,
+        "density": 1
+      },
+      {
+        "file": "apps/navigation/components/mobile-menu.tsx",
+        "exports": 1,
+        "bodyCount": 1,
+        "density": 1
+      },
+      {
+        "file": "apps/navigation/pages/_navigation/header/index.tsx",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "apps/content/postcss.config.mjs",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "apps/content/tailwind.config.ts",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "apps/navigation/postcss.config.mjs",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "apps/navigation/tailwind.config.ts",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "apps/root/postcss.config.js",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      }
+    ],
+    "errors": []
+  },
+  "topoOrder": [
+    "apps/content/next-env.d.ts",
+    "apps/content/next.config.js",
+    "apps/content/postcss.config.mjs",
+    "apps/content/tailwind.config.ts",
+    "apps/navigation/next-env.d.ts",
+    "apps/navigation/next.config.js",
+    "apps/navigation/postcss.config.mjs",
+    "apps/navigation/tailwind.config.ts",
+    "apps/root/global.d.ts",
+    "apps/root/next-env.d.ts",
+    "apps/root/next.config.js",
+    "apps/root/postcss.config.js",
+    "apps/root/tailwind.config.js",
+    "apps/content/pages/_app.tsx",
+    "apps/content/pages/_document.tsx",
+    "apps/navigation/components/mobile-menu-button.tsx",
+    "apps/navigation/pages/_app.tsx",
+    "apps/navigation/pages/_document.tsx",
+    "apps/root/pages/_app.tsx",
+    "apps/root/pages/_document.tsx",
+    "apps/root/pages/index.tsx",
+    "apps/content/pages/_content/index.tsx",
+    "apps/navigation/pages/_navigation/footer/index.tsx",
+    "apps/navigation/pages/_navigation/header/index.tsx",
+    "packages/eslint-config-custom/next.js",
+    "apps/navigation/components/mobile-menu.tsx"
+  ]
+}

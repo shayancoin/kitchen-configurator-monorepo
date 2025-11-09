@@ -1,0 +1,30 @@
+image:
+  repository: ghcr.io/parviz/example
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 60
+
+otel:
+  exporterEndpoint: http://otel-collector:4318/v1/traces
+  sampleRatio: 0.25
+
+config: {}

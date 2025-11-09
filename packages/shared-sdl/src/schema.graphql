@@ -1,0 +1,62 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key"])
+
+type Money {
+  amount: Int!
+  currency: String!
+}
+
+type FinishOption {
+  id: ID!
+  label: String!
+  costDelta: Int!
+  leadTimeWeeks: Int!
+  helper: String
+  swatchAssetUrl: String
+}
+
+type SpriteLayer {
+  id: ID!
+  variant: String!
+  sortOrder: Int!
+  bucket: String!
+  objectKey: String!
+  width: Int!
+  height: Int!
+  url: String
+}
+
+type CatalogModule @key(fields: "id") {
+  id: ID!
+  sku: String!
+  name: String!
+  category: String!
+  basePrice: Int!
+  summary: String
+  heroImageUrl: String
+  finishes: [FinishOption!]!
+  spriteLayers(variant: String = "base"): [SpriteLayer!]!
+}
+
+type PricingLineItem {
+  label: String!
+  amount: Int!
+}
+
+type PricingQuote @key(fields: "id") {
+  id: ID!
+  module: CatalogModule!
+  finishId: ID!
+  subtotal: Int!
+  adjustments: [PricingLineItem!]!
+  total: Int!
+  currency: String!
+  leadTimeWeeks: Int!
+}
+
+type Query {
+  catalogModules: [CatalogModule!]!
+  catalogModule(id: ID!): CatalogModule
+  catalogSprites(moduleId: ID!, variant: String): [SpriteLayer!]!
+  pricingEstimate(moduleId: ID!, finishId: ID!): PricingQuote!
+}

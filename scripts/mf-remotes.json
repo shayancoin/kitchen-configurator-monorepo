@@ -1,0 +1,6 @@
+{
+  "modules": [
+    "mfe-config-panel/ConfiguratorPanel",
+    "mfe-viewer2d/ViewerCanvas"
+  ]
+}

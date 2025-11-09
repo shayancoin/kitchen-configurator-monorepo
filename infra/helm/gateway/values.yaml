@@ -1,0 +1,38 @@
+image:
+  repository: ghcr.io/parviz/gateway
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 4100
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 60
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 384Mi
+  limits:
+    cpu: 750m
+    memory: 768Mi
+
+env:
+  - name: ENABLE_MF_PLUGIN
+    value: "true"
+  - name: NODE_ENV
+    value: production
+  - name: OTEL_SERVICE_NAME
+    value: parviz-gateway
+
+otel:
+  exporterEndpoint: http://otel-collector.monitoring:4318/v1/traces
+  sampleRatio: 0.2
+
+config:
+  GRAPHQL__APQ: "true"
+  GRAPHQL__TIMEOUT_MS: "3000"

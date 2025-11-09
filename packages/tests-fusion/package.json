@@ -1,0 +1,12 @@
+{
+  "name": "@repo/tests-fusion",
+  "private": true,
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.3"
+  }
+}

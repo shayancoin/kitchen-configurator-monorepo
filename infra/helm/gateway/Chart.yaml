@@ -1,0 +1,10 @@
+apiVersion: v2
+name: gateway
+description: Apollo federation gateway deployment chart for Parviz
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+dependencies:
+  - name: lib-service
+    version: 0.1.0
+    repository: "file://../lib-service"

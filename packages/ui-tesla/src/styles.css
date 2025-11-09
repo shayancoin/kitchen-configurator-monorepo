@@ -1,0 +1,473 @@
+@font-face {
+  font-family: "Tesla Display";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/14488/TESLA.woff") format("woff");
+}
+
+:root {
+  --tesla-font-family: "Tesla Display", "Helvetica Neue", "Rubik", "Segoe UI", sans-serif;
+  --tesla-color-text: #393c41;
+  --tesla-color-primary: #000000;
+  --tesla-color-accent: #e82127;
+  --tesla-color-surface: rgba(255, 255, 255, 0.92);
+  --tesla-color-muted: rgba(57, 60, 65, 0.72);
+  --tesla-color-border: rgba(255, 255, 255, 0.24);
+  --tesla-transition-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --tesla-section-bg-image: none;
+  --tesla-section-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+.tesla-theme {
+  font-family: var(--tesla-font-family);
+  color: var(--tesla-color-text);
+  background-color: inherit;
+  min-height: 100%;
+}
+
+.tesla-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  padding: 1.25rem clamp(1.5rem, 4vw, 5rem);
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tesla-header__brand {
+  font-size: 1.1rem;
+  letter-spacing: 0.4rem;
+  font-weight: 600;
+  color: var(--tesla-color-primary);
+  text-transform: uppercase;
+}
+
+.tesla-header__nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.tesla-header__nav-link {
+  position: relative;
+  padding-bottom: 0.25rem;
+  color: var(--tesla-color-text);
+  text-decoration: none;
+  transition: color 200ms var(--tesla-transition-standard);
+}
+
+.tesla-header__nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--tesla-color-accent);
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 200ms var(--tesla-transition-standard);
+}
+
+.tesla-header__nav-link:hover,
+.tesla-header__nav-link--active {
+  color: var(--tesla-color-primary);
+}
+
+.tesla-header__nav-link:hover::after,
+.tesla-header__nav-link--active::after {
+  transform: scaleX(1);
+}
+
+.tesla-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tesla-header__action {
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--tesla-color-primary);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background-color 200ms var(--tesla-transition-standard),
+    color 200ms var(--tesla-transition-standard);
+}
+
+.tesla-header__action--accent {
+  background-color: var(--tesla-color-accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.tesla-header__action:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tesla-header__action--accent:hover {
+  background-color: #c9151f;
+}
+
+.tesla-header__menu {
+  display: none;
+  border: 0;
+  background: transparent;
+  color: var(--tesla-color-primary);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .tesla-header__nav,
+  .tesla-header__actions {
+    display: none;
+  }
+
+  .tesla-header__menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+}
+
+.tesla-section {
+  position: relative;
+  min-height: 90vh;
+  padding: clamp(3rem, 6vw, 7rem) clamp(1.5rem, 6vw, 8rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  overflow: hidden;
+  border-radius: clamp(0.5rem, 1.2vw, 2rem);
+  background-color: var(--tesla-color-primary);
+  color: #fff;
+  background-image: var(--tesla-section-overlay), var(--tesla-section-bg-image);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
+}
+
+.tesla-section__top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tesla-section__eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.tesla-section__title {
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.tesla-section__description {
+  font-size: 1.05rem;
+  max-width: 42rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.tesla-section__description a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.tesla-section__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.tesla-section__cta {
+  border-radius: 999px;
+  padding: 0.85rem 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 200ms var(--tesla-transition-standard),
+    background-color 200ms var(--tesla-transition-standard);
+}
+
+.tesla-section__cta--primary {
+  background-color: var(--tesla-color-accent);
+  border-color: transparent;
+}
+
+.tesla-section__cta:hover {
+  transform: translateY(-2px);
+}
+
+.tesla-section__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.tesla-section__stat-value {
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.tesla-section__stat-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.2em;
+}
+
+.tesla-section__stat-helper {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.35rem;
+}
+
+.tesla-section__arrow {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.6);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  transform: rotate(-45deg);
+  margin-top: 2rem;
+  animation: tesla-arrow-bounce 1.8s infinite;
+  align-self: center;
+}
+
+@keyframes tesla-arrow-bounce {
+  0% {
+    transform: translateY(0) rotate(-45deg);
+  }
+  50% {
+    transform: translateY(6px) rotate(-45deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-45deg);
+  }
+}
+
+.tesla-preview-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+
+.tesla-config-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 1.5rem;
+  background: rgba(11, 11, 15, 0.85);
+  backdrop-filter: blur(20px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.45);
+}
+
+.tesla-config-panel__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.tesla-config-panel__eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.35rem;
+}
+
+.tesla-config-panel__title {
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+}
+
+.tesla-config-panel__price-summary {
+  text-align: right;
+}
+
+.tesla-config-panel__price-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.tesla-config-panel__price-value {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.tesla-config-panel__price-helper {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tesla-config-panel__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.tesla-config-panel__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tesla-config-panel__section:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tesla-config-panel__section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.tesla-config-panel__section-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.35rem;
+}
+
+.tesla-config-panel__section-title {
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+}
+
+.tesla-config-panel__section-description {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+}
+
+.tesla-config-panel__section-aside {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tesla-config-panel__option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.tesla-config-panel__option-grid--columns-3 {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.tesla-config-panel__option-grid--one {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.tesla-config-panel__option {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+  color: inherit;
+  text-align: left;
+  transition: border-color 200ms var(--tesla-transition-standard),
+    transform 200ms var(--tesla-transition-standard);
+}
+
+.tesla-config-panel__option:hover {
+  border-color: rgba(255, 255, 255, 0.65);
+  transform: translateY(-2px);
+}
+
+.tesla-config-panel__option--active {
+  border-color: var(--tesla-color-accent);
+  box-shadow: 0 0 0 1px var(--tesla-color-accent);
+}
+
+.tesla-config-panel__option--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tesla-config-panel__option-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tesla-config-panel__option-helper {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.tesla-config-panel__option-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.tesla-config-panel__option-price {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.tesla-config-panel__option-badge {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.tesla-config-panel__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 720px) {
+  .tesla-config-panel__header {
+    flex-direction: column;
+    text-align: left;
+  }
+  .tesla-config-panel__price-summary {
+    text-align: left;
+  }
+}

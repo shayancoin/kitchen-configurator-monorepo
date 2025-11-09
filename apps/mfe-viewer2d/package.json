@@ -1,0 +1,27 @@
+{
+  "name": "mfe-viewer2d",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4022",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "clean": "git clean -xdf .next node_modules"
+  },
+  "dependencies": {
+    "@repo/compositor-client": "workspace:*",
+    "@repo/config": "workspace:*",
+    "@repo/next-config": "workspace:*",
+    "@repo/ui-tesla": "workspace:*",
+    "next": "16.0.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "24.9.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "^5.9.3"
+  }
+}

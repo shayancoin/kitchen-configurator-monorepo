@@ -1,0 +1,29 @@
+[workspace]
+members = [
+    "crates/kernel-adapter",
+    "crates/cnc-bridge",
+    "crates/service",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Kitchen Configurator Team"]
+
+[workspace.dependencies]
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+axum = { version = "0.7", features = ["macros", "json"] }
+tokio = { version = "1.39", features = ["rt-multi-thread", "macros"] }
+uuid = { version = "1.8", features = ["v4"] }
+tower = { version = "0.5", features = ["util"] }
+cnccoder = { git = "https://github.com/tirithen/cnccoder", rev = "e0ae4b53b34e1d23043dfa0268e9ff92f246b404", default-features = false }
+fj = { git = "https://github.com/hannobraun/fornjot", package = "fj", rev = "608f7b3057c1c075002784c25e850209aaa7af4a" }
+fj-core = { git = "https://github.com/hannobraun/fornjot", package = "fj-core", rev = "608f7b3057c1c075002784c25e850209aaa7af4a" }
+fj-math = { git = "https://github.com/hannobraun/fornjot", package = "fj-math", rev = "608f7b3057c1c075002784c25e850209aaa7af4a" }

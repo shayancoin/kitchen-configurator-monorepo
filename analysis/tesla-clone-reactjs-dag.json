@@ -1,0 +1,174 @@
+{
+  "summary": {
+    "repoPath": "/tmp/Tesla-clone-reactjs",
+    "analyzedFiles": 36,
+    "totalNodes": 36,
+    "totalEdges": 62,
+    "maxDepth": 1,
+    "topoOrderSample": [
+      "src/index.js",
+      "src/setupTests.js",
+      "src/App.js",
+      "src/app/store.js",
+      "src/serviceWorker.js",
+      "src/globalstyles.js",
+      "src/components/home.js",
+      "src/components/Model-S/index.js",
+      "src/components/Model-3/index.js",
+      "src/components/Model-X/index.js",
+      "src/components/Model_Y/index.js",
+      "src/components/Login/index.js",
+      "src/components/Signup/index.js",
+      "src/components/Account/index.js",
+      "src/components/home.style.js",
+      "src/components/Model-S/models.style.js",
+      "src/components/Model-3/model3.style.js",
+      "src/components/Model-X/modelx.style.js",
+      "src/components/Model_Y/modely.style.js",
+      "src/components/Section/index.js",
+      "src/components/Interior_Specs/index.js",
+      "src/components/Gen_Spec/index.js",
+      "src/components/Login/login.style.js",
+      "src/components/Signup/signup.style.js",
+      "src/components/Footer/index.js"
+    ],
+    "hasCycle": false,
+    "denseModules": [
+      {
+        "file": "src/components/Section/section.style.js",
+        "exports": 4,
+        "bodyCount": 5,
+        "density": 0.8
+      },
+      {
+        "file": "src/components/Account/account.style.js",
+        "exports": 3,
+        "bodyCount": 4,
+        "density": 0.75
+      },
+      {
+        "file": "src/components/Header/header.style.js",
+        "exports": 3,
+        "bodyCount": 4,
+        "density": 0.75
+      },
+      {
+        "file": "src/globalstyles.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/home.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Footer/footer.syle.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Gen_Spec/spec.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Interior_Specs/interior.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Model-S/models.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Login/login.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/SideNav/sidenav.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/components/Signup/signup.style.js",
+        "exports": 2,
+        "bodyCount": 3,
+        "density": 0.667
+      },
+      {
+        "file": "src/features/userSlice.js",
+        "exports": 3,
+        "bodyCount": 6,
+        "density": 0.5
+      },
+      {
+        "file": "src/components/Model-3/model3.style.js",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "src/components/Model-X/modelx.style.js",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      },
+      {
+        "file": "src/components/Model_Y/modely.style.js",
+        "exports": 1,
+        "bodyCount": 2,
+        "density": 0.5
+      }
+    ],
+    "errors": []
+  },
+  "topoOrder": [
+    "src/index.js",
+    "src/setupTests.js",
+    "src/App.js",
+    "src/app/store.js",
+    "src/serviceWorker.js",
+    "src/globalstyles.js",
+    "src/components/home.js",
+    "src/components/Model-S/index.js",
+    "src/components/Model-3/index.js",
+    "src/components/Model-X/index.js",
+    "src/components/Model_Y/index.js",
+    "src/components/Login/index.js",
+    "src/components/Signup/index.js",
+    "src/components/Account/index.js",
+    "src/components/home.style.js",
+    "src/components/Model-S/models.style.js",
+    "src/components/Model-3/model3.style.js",
+    "src/components/Model-X/modelx.style.js",
+    "src/components/Model_Y/modely.style.js",
+    "src/components/Section/index.js",
+    "src/components/Interior_Specs/index.js",
+    "src/components/Gen_Spec/index.js",
+    "src/components/Login/login.style.js",
+    "src/components/Signup/signup.style.js",
+    "src/components/Footer/index.js",
+    "src/components/Account/account.style.js",
+    "src/components/Header/index.js",
+    "src/features/userSlice.js",
+    "src/components/firebase.js",
+    "src/components/Section/section.style.js",
+    "src/components/Interior_Specs/interior.style.js",
+    "src/components/Gen_Spec/spec.style.js",
+    "src/components/Footer/footer.syle.js",
+    "src/components/Header/header.style.js",
+    "src/components/SideNav/index.js",
+    "src/components/SideNav/sidenav.style.js"
+  ]
+}

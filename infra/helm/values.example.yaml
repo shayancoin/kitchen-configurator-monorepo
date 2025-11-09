@@ -1,0 +1,22 @@
+image:
+  repository: ghcr.io/parviz/gateway
+  tag: sha-abc123
+service:
+  type: ClusterIP
+  port: 4100
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 55
+env:
+  - name: NODE_ENV
+    value: production
+  - name: DATABASE_URL
+    value: postgresql://gateway:gateway@db:5432/gateway
+config:
+  GRAPHQL__APQ: "true"
+  GRAPHQL__TIMEOUT_MS: "5000"
+otel:
+  exporterEndpoint: http://otel-collector.monitoring:4318/v1/traces
+  sampleRatio: 0.2
