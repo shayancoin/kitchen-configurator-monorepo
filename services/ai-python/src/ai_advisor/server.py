@@ -88,6 +88,7 @@ def _build_llm(settings: Settings) -> LanguageModel:
     if settings.openai_api_key:
         llm = ChatOpenAI(temperature=0.2, api_key=settings.openai_api_key, model_name="gpt-4o-mini")
         return LangChainLLMAdapter(llm)
+    # EXTEND_AI_HERE: drop in CSP/CP-SAT backed reasoning once deterministic seeds land.
     return EchoLLM()
 
 

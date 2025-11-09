@@ -143,6 +143,7 @@ const ViewerCanvas = () => {
           for the canvas below. This remote mirrors the Tesla viewer shell but swaps
           DOM paint with wasm-bindgen perf.
         </p>
+        {/* EXTEND_AI_HERE: swap composeLayers with WebGPU path once COOP/COEP lands. */}
       </header>
       <div className={styles.canvasFrame}>
         <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} />

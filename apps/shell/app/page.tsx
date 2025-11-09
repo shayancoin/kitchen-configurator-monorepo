@@ -1,5 +1,7 @@
+"use client";
+
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import {
   TeslaHeader,
   TeslaSection,
@@ -7,7 +9,9 @@ import {
   type TeslaSectionStat
 } from "@repo/ui-tesla";
 import LocalConfiguratorPanel from "@/components/LocalConfiguratorPanel";
+import PerfBudgetIndicator from "@/components/PerfBudgetIndicator";
 import ViewerPlaceholder from "@/components/ViewerPlaceholder";
+import { initPerfBudget } from "@/lib/perf";
 
 const isRemoteEnabled =
   process.env.NEXT_PUBLIC_ENABLE_MF_REMOTES === "true";
@@ -58,9 +62,14 @@ const stats: TeslaSectionStat[] = [
   { label: "WASM Init", value: "<50 ms" }
 ];
 
-const ShellPage = () => (
-  <TeslaThemeProvider className="shell">
-    <TeslaHeader
+const ShellPage = () => {
+  useEffect(() => {
+    initPerfBudget();
+  }, []);
+
+  return (
+    <TeslaThemeProvider className="shell">
+      <TeslaHeader
       brand="PARVIZ"
       navLinks={[
         { label: "Configurator", href: "/", active: true },
@@ -86,7 +95,7 @@ const ShellPage = () => (
       </section>
     </div>
 
-    <TeslaSection
+      <TeslaSection
       eyebrow="Vehicle DNA"
       title="Viewer2D target preview"
       description="Host shares Tesla UI tokens with all MFEs so the viewport, pricing, and AI rails align without hydration drift."
@@ -99,8 +108,11 @@ const ShellPage = () => (
         { label: "Open Viewer", variant: "primary", href: "/viewer" },
         { label: "Manufacturing Mode", variant: "secondary", href: "/manufacturing" }
       ]}
-    />
-  </TeslaThemeProvider>
-);
+      />
+
+      <PerfBudgetIndicator />
+    </TeslaThemeProvider>
+  );
+};
 
 export default ShellPage;
