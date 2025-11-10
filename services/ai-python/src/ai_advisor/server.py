@@ -53,6 +53,14 @@ def get_pipeline() -> RAGPipeline:
 
 @lru_cache
 def _build_pipeline() -> RAGPipeline:
+    """
+    Constructs and returns a configured RAGPipeline based on current application settings.
+    
+    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist before and after pipeline construction for modifying embedding/vector-store strategy and post-reranker tracing.
+    
+    Returns:
+        RAGPipeline: A pipeline configured with the application's vector store, embedder, LLM, default_k, and generator_label.
+    """
     settings = get_settings()
     embedder = _build_embedder(settings)
     dim = _infer_dim(embedder, settings.embed_dim)
@@ -87,6 +95,15 @@ def _infer_dim(embedder: Embedder, fallback: int) -> int:
 
 
 def _build_llm(settings: Settings) -> LanguageModel:
+    """
+    Constructs and returns a language model configured from the provided settings.
+    
+    Parameters:
+        settings (Settings): Configuration object; if `settings.openai_api_key` is set, an OpenAI-backed model is returned, otherwise a deterministic fallback is used.
+    
+    Returns:
+        LanguageModel: An OpenAI-backed model when `settings.openai_api_key` is present, otherwise an `EchoLLM` fallback.
+    """
     if settings.openai_api_key:
         llm = ChatOpenAI(temperature=0.2, api_key=settings.openai_api_key, model_name="gpt-4o-mini")
         return LangChainLLMAdapter(llm)

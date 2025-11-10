@@ -19,14 +19,43 @@ IGNORE_FILES = {
 }
 
 def should_ignore(name: str) -> bool:
-    """Check if a file/directory should be ignored."""
+    """
+    Determine whether a filesystem name should be ignored by the tree generator.
+    
+    Returns:
+        `true` if the name is listed in IGNORE_DIRS, listed in IGNORE_FILES, or starts with a dot, `false` otherwise.
+    """
     return name in IGNORE_DIRS or name in IGNORE_FILES or name.startswith('.')
 
 def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
-    """Generate tree structure up to max_depth."""
+    """
+    Produce a list of text lines representing the directory tree rooted at `root_path` up to a given depth.
+    
+    Each returned string is a single tree line formatted as "- name/" for directories and "- name" for files. Entries are indented by two spaces per depth level. Directories appear before files and entries are ordered by name. Names present in the module's ignore sets or that start with a dot are omitted. If a directory cannot be read due to permissions, that subtree is skipped.
+    
+    Parameters:
+        root_path (Path): Root directory to generate the tree from.
+        max_depth (int): Maximum recursion depth (0 lists only root's immediate children, 1 includes one level of subdirectories, etc.).
+    
+    Returns:
+        list[str]: Lines representing the repository tree in textual form.
+    """
     lines = []
     
     def walk_dir(path: Path, prefix: str = "", depth: int = 0) -> None:
+        """
+        Recursively traverse a directory tree up to a containing scope's `max_depth` and append formatted lines describing files and directories to the enclosing `lines` list.
+        
+        Parameters:
+            path (Path): Directory path to walk.
+            prefix (str): Indentation prefix used for nested entries (each level adds two spaces).
+            depth (int): Current recursion depth relative to the initial call.
+        
+        Notes:
+            - Skips entries whose names are filtered by `should_ignore`.
+            - Stops recursing when `depth` exceeds `max_depth`.
+            - Silently skips directories that raise `PermissionError` when iterated.
+        """
         if depth > max_depth:
             return
         
@@ -50,6 +79,11 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
     return lines
 
 def main():
+    """
+    Generate a Markdown-formatted repository tree up to depth 2 and print it to stdout.
+    
+    Determines the repository root as two levels up from this script, builds a textual tree by calling `generate_tree` with `max_depth=2`, wraps the tree in a header and a fenced "text" code block, and writes the resulting Markdown to standard output.
+    """
     repo_root = Path(__file__).parent.parent
     
     # Generate tree

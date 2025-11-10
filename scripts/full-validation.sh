@@ -24,6 +24,10 @@ echo "[validation] turbo test/build"
 "${PNPM_BIN[@]}" turbo run test --continue
 "${PNPM_BIN[@]}" turbo run build --continue
 
+# run_go_tests runs the Go test suite for the specified service.
+# On macOS, attempts to run the repository's Linux test wrapper via Docker and skips with a warning if Docker is unavailable.
+# On non-macOS, invokes the configured Go binary to run `go test ./...` inside the service directory and skips with a warning if the Go toolchain is not found.
+# $1 - service name (directory name under services/)
 run_go_tests() {
   local svc="$1"
   echo "[validation] go test services/$svc"
