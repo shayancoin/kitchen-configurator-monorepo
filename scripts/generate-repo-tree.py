@@ -26,7 +26,7 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
     """Generate tree structure up to max_depth."""
     lines = []
     
-    def walk_dir(path: Path, prefix: str = "", depth: int = 0):
+    def walk_dir(path: Path, prefix: str = "", depth: int = 0) -> None:
         if depth > max_depth:
             return
         
