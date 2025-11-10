@@ -29,11 +29,6 @@ processors:
         type: latency
         latency:
           threshold: 300ms
-  spanmetrics:
-    metrics_flush_interval: 15s
-    dimensions:
-      - name: http.method
-      - name: http.route
 
 exporters:
   logging:
@@ -44,6 +39,13 @@ exporters:
       insecure: true
   prometheusremotewrite:
     endpoint: ${var.prometheus_remote_write}
+
+connectors:
+  spanmetrics:
+    metrics_flush_interval: 15s
+    dimensions:
+      - name: http.method
+      - name: http.route
 
 service:
   telemetry:
