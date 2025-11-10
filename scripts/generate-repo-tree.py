@@ -3,7 +3,6 @@
 Generate repository tree structure (depth ≤ 2) for docs/repo-tree.md.
 """
 import os
-import sys
 from pathlib import Path
 
 # Directories to ignore
