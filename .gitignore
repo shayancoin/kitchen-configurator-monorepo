@@ -21,3 +21,4 @@ target
 *.wasm.*
 *.tgz
 /.tooling/node-*
+artifacts/*.json

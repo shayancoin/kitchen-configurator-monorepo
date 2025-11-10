@@ -63,6 +63,7 @@ resource "aws_elasticache_replication_group" "this" {
 
   tags = var.tags
 }
+}
    subnet_group_name           = aws_elasticache_subnet_group.this.name
 
    tags = var.tags

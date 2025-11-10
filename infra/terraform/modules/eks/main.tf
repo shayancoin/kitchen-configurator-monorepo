@@ -1,3 +1,13 @@
+locals {
+  kubernetes_minor_version = regex("^\\d+\\.\\d+", var.kubernetes_version)
+  ebs_csi_compatibility = {
+    "1.28" = "v1.28.0-eksbuild.1"
+    "1.29" = "v1.29.0-eksbuild.1"
+    "1.30" = "v1.30.0-eksbuild.1"
+    "1.31" = "v1.31.0-eksbuild.1"
+  }
+}
+
 resource "aws_iam_role" "cluster" {
   name = "${var.cluster_name}-cluster-role"
 
@@ -112,6 +122,15 @@ resource "aws_eks_node_group" "this" {
 resource "aws_eks_addon" "ebs_csi" {
   cluster_name                = aws_eks_cluster.this.name
   addon_name                  = "aws-ebs-csi-driver"
+  addon_version               = local.ebs_csi_compatibility[local.kubernetes_minor_version]
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  lifecycle {
+    precondition {
+      condition     = contains(keys(local.ebs_csi_compatibility), local.kubernetes_minor_version)
+      error_message = "Unsupported kubernetes_version ${var.kubernetes_version} for aws-ebs-csi-driver addon."
+    }
+  }
   addon_version               = "v1.28.0-eksbuild.1"
   resolve_conflicts_on_create = "OVERWRITE"
 }
