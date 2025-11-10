@@ -67,7 +67,8 @@ export const TeslaThemeProvider = ({
     }
 
     window.tesla = {
-      ...(window.tesla ?? {}),
+      metrics: window.tesla?.metrics,
+      perfBudget: window.tesla?.perfBudget,
       version: "ds-1.1",
       tokens: mergedTokens,
       components: mergedContracts
