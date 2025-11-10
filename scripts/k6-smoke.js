@@ -2,15 +2,23 @@ import http from "k6/http";
 import { Trend } from "k6/metrics";
 import { check, sleep } from "k6";
 
-const baseUrl = __ENV.KITCHEN_BASE_URL ?? "http://localhost:3000";
-const locale = __ENV.KITCHEN_LOCALE ?? "en";
+// Use logical OR (||) instead of nullish coalescing (??) to ensure empty strings
+// are properly replaced with defaults
+const baseUrl = __ENV.KITCHEN_BASE_URL || "http://localhost:3000";
+const locale = __ENV.KITCHEN_LOCALE || "en";
 
 const configuratorTTFB = new Trend("configurator_ttfb", true);
 const graphQLDuration = new Trend("graphql_hot_duration", true);
 
+// Parse and validate K6_VUS with fallback to safe default
+const parseVUs = (envValue) => {
+  const parsed = Number(envValue);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 5;
+};
+
 export const options = {
-  vus: Number(__ENV.K6_VUS ?? 5),
-  duration: __ENV.K6_DURATION ?? "1m",
+  vus: parseVUs(__ENV.K6_VUS),
+  duration: __ENV.K6_DURATION || "1m",
   thresholds: {
     http_req_duration: ["p(95)<2000"],
     configurator_ttfb: ["avg<500"],
@@ -46,9 +54,21 @@ export default function smoke() {
   });
 
   configuratorTTFB.add(previewResponse.timings.waiting);
+  
+  // Structural validation for SSR hydration markers
+  // Check for presence of Next.js SSR container and bootstrap data
+  const MIN_HYDRATED_HTML_BYTES = 1024; // Sanity check: hydrated HTML should be reasonably sized
+  const isHydrated = (res) => {
+    if (!res.body) return false;
+    const hasSSRContainer = res.body.includes('<div id="__next">');
+    const hasBootstrapData = res.body.includes('__NEXT_DATA__');
+    const hasMinimalSize = res.body.length > MIN_HYDRATED_HTML_BYTES;
+    return hasSSRContainer && hasBootstrapData && hasMinimalSize;
+  };
+  
   check(previewResponse, {
     "preview status 200": (res) => res.status === 200,
-    "preview hydrated": (res) => res.body && res.body.length > 1024
+    "preview hydrated": isHydrated
   });
 
   const graphqlResponse = http.post(`${baseUrl}/graphql`, graphqlPayload, {
@@ -64,5 +84,11 @@ export default function smoke() {
     "graphql no errors": () => !gqlBody?.errors || gqlBody.errors.length === 0
   });
 
-  sleep(Number(__ENV.K6_SLEEP ?? 1));
+  // Parse and validate K6_SLEEP duration with fallback to safe default
+  const parseSleepDuration = (envValue) => {
+    const parsed = parseFloat(envValue);
+    return Number.isFinite(parsed) && parsed >= 0 ? parsed : 1;
+  };
+
+  sleep(parseSleepDuration(__ENV.K6_SLEEP));
 }

@@ -51,13 +51,24 @@ export const TeslaThemeProvider = ({
   );
   const variables = tokensToCSSVariables(mergedTokens);
   const mergedContracts = useMemo<TeslaComponentContracts>(
-    () => ({
-      header: contracts?.header ?? defaultComponentContracts.header,
-      section: contracts?.section ?? defaultComponentContracts.section,
-      configuratorPanel:
-        contracts?.configuratorPanel ??
-        defaultComponentContracts.configuratorPanel
-    }),
+    () => {
+      // Use structuredClone to create defensive copies and prevent aliasing of
+      // default contracts into window.tesla.components. Without cloning, external
+      // mutations to window.tesla.components would corrupt module-level defaults.
+      const resolved: TeslaComponentContracts = {
+        header: structuredClone(
+          contracts?.header ?? defaultComponentContracts.header
+        ),
+        section: structuredClone(
+          contracts?.section ?? defaultComponentContracts.section
+        ),
+        configuratorPanel: structuredClone(
+          contracts?.configuratorPanel ??
+            defaultComponentContracts.configuratorPanel
+        )
+      };
+      return resolved;
+    },
     [contracts]
   );
 
