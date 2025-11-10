@@ -1,4 +1,6 @@
 name: pr-001-infra
+permissions:
+  contents: read
 
 on:
   pull_request:
