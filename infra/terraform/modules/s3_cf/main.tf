@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "bucket" {
     }
 
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "AWS:SourceArn"
       values   = ["arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/*"]
     }

@@ -5,13 +5,23 @@
 set -euo pipefail
 
 BASE="${1:-$(git rev-parse --abbrev-ref HEAD)}"
+if [[ "$BASE" == "HEAD" ]]; then
+  echo "[phase-prep] ERROR: Detached HEAD state. Specify a branch explicitly."
+  exit 1
+fi
+if ! git rev-parse --verify "$BASE" >/dev/null 2>&1; then
+  echo "[phase-prep] ERROR: Base branch/commit '$BASE' does not exist."
+  exit 1
+fi
 DRY_RUN="false"
 
-for arg in "$@"; do
-  if [[ "$arg" == "--dry-run" ]]; then
-    DRY_RUN="true"
-  fi
-done
+ DRY_RUN="false"
+ 
+ for arg in "$@"; do
+   if [[ "$arg" == "--dry-run" ]]; then
+     DRY_RUN="true"
+   fi
+ done
 
 PHASES=(
   "feature/phase-1-mvp"

@@ -32,6 +32,12 @@ variable "client_password" {
   sensitive = true
 }
 
+variable "allow_plaintext" {
+  type        = bool
+  description = "Set to true only if legacy clients require PLAINTEXT traffic; enabling this reduces transport security."
+  default     = false
+}
+
 variable "tags" {
   type    = map(string)
   default = {}
