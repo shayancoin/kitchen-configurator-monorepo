@@ -11,9 +11,10 @@ const configuratorTTFB = new Trend("configurator_ttfb", true);
 const graphQLDuration = new Trend("graphql_hot_duration", true);
 
 // Parse and validate K6_VUS with fallback to safe default
+// K6 requires a positive integer for VU count
 const parseVUs = (envValue) => {
   const parsed = Number(envValue);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 5;
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : 5;
 };
 
 export const options = {

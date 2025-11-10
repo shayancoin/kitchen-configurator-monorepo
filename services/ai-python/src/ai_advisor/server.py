@@ -75,7 +75,8 @@ def _build_pipeline() -> RAGPipeline:
         default_k=settings.top_k,
         generator_label=label,
     )
-    # EXTEND_AI_HERE: post-pipeline hook (stream rerank traces, inject custom rerankers, downstream AI features).
+    # EXTEND_AI_HERE: post-pipeline hook (observe, trace, or wrap the constructed RAGPipeline;
+    # reranking is selected at invocation time via InferenceRequest.rerank, not set here).
     return pipeline
 
 
