@@ -113,3 +113,34 @@ jobs:
             terraform -chdir=infra/terraform plan -var-file=env/staging.tfvars -out plan-staging.bin -input=false
         - uses: actions/upload-artifact@v4
           with: { name: tf-plan-staging, path: infra/terraform/plan-staging.bin }
+  plan:
+    if: ${{ secrets.AWS_ROLE_TO_ASSUME != '' && secrets.TF_STATE_BUCKET != '' && secrets.TF_STATE_DDB != '' && secrets.AWS_REGION != '' }}
+    needs: [fmt_validate, tflint, tfsec, checkov]
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with: { terraform_version: 1.9.5 }
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Terraform init (remote backend)
+        run: |
+          cat > infra/terraform/backend.hcl <<'HCL'
+          bucket="${{ secrets.TF_STATE_BUCKET }}"
+          dynamodb_table="${{ secrets.TF_STATE_DDB }}"
+          key="iac/pr-001/terraform.tfstate"
+          region="${{ secrets.AWS_REGION }}"
+          encrypt=true
+          HCL
+          terraform -chdir=infra/terraform init -backend-config=backend.hcl
+      - name: Terraform plan (staging)
+        run: |
+          terraform -chdir=infra/terraform workspace new staging || terraform -chdir=infra/terraform workspace select staging
+          terraform -chdir=infra/terraform plan -var-file=env/staging.tfvars -out plan-staging.bin -input=false
+      - uses: actions/upload-artifact@v4
+        with: { name: tf-plan-staging, path: infra/terraform/plan-staging.bin }

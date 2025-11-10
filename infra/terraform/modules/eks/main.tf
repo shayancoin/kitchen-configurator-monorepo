@@ -131,6 +131,8 @@ resource "aws_eks_addon" "ebs_csi" {
       error_message = "Unsupported kubernetes_version ${var.kubernetes_version} for aws-ebs-csi-driver addon."
     }
   }
+  addon_version               = "v1.28.0-eksbuild.1"
+  resolve_conflicts_on_create = "OVERWRITE"
 }
 
 resource "aws_iam_openid_connect_provider" "this" {

@@ -29,6 +29,11 @@ processors:
         type: latency
         latency:
           threshold: 300ms
+  spanmetrics:
+    metrics_flush_interval: 15s
+    dimensions:
+      - name: http.method
+      - name: http.route
 
 exporters:
   logging:

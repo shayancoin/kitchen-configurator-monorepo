@@ -28,6 +28,7 @@ resource "aws_msk_cluster" "this" {
   encryption_info {
     encryption_in_transit {
       client_broker = var.allow_plaintext ? "TLS_PLAINTEXT" : "TLS"
+      client_broker = "TLS_PLAINTEXT"
       in_cluster    = true
     }
   }
