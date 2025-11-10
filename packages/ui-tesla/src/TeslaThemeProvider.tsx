@@ -6,34 +6,72 @@ import {
   type TeslaTokenOverrides,
   type TeslaTokens
 } from "./tokens";
+import {
+  defaultComponentContracts,
+  type TeslaComponentContracts
+} from "./contracts";
+import { TESLA_DS_VERSION } from "./version";
 
 export type TeslaThemeProviderProperties = {
   readonly children: ReactNode;
   readonly className?: string;
   readonly style?: CSSProperties;
   readonly overrides?: TeslaTokenOverrides;
+  readonly contracts?: Partial<TeslaComponentContracts>;
 };
 
-declare global {
-  interface Window {
-    tesla?: {
-      version: string;
-      tokens: TeslaTokens;
-    };
-  }
-}
+export type TeslaPerfMetrics = {
+  readonly tti?: number;
+  readonly lcp?: number;
+  readonly fid?: number;
+};
+
+export type TeslaPerfBudgetState = {
+  readonly failed: boolean;
+  readonly reasons: readonly string[];
+};
+
+export type TeslaGlobalContract = {
+  readonly version: string;
+  readonly tokens: TeslaTokens;
+  readonly components: TeslaComponentContracts;
+  readonly metrics?: TeslaPerfMetrics;
+  readonly perfBudget?: TeslaPerfBudgetState;
+};
 
 export const TeslaThemeProvider = ({
   children,
   className,
   style,
-  overrides
+  overrides,
+  contracts
 }: TeslaThemeProviderProperties) => {
   const mergedTokens = useMemo(
     () => mergeTeslaTokens(overrides),
     [overrides]
   );
   const variables = tokensToCSSVariables(mergedTokens);
+  const mergedContracts = useMemo<TeslaComponentContracts>(
+    () => {
+      // Use structuredClone to create defensive copies and prevent aliasing of
+      // default contracts into window.tesla.components. Without cloning, external
+      // mutations to window.tesla.components would corrupt module-level defaults.
+      const resolved: TeslaComponentContracts = {
+        header: structuredClone(
+          contracts?.header ?? defaultComponentContracts.header
+        ),
+        section: structuredClone(
+          contracts?.section ?? defaultComponentContracts.section
+        ),
+        configuratorPanel: structuredClone(
+          contracts?.configuratorPanel ??
+            defaultComponentContracts.configuratorPanel
+        )
+      };
+      return resolved;
+    },
+    [contracts]
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -41,10 +79,13 @@ export const TeslaThemeProvider = ({
     }
 
     window.tesla = {
-      version: "ds-1",
-      tokens: mergedTokens
+      metrics: window.tesla?.metrics,
+      perfBudget: window.tesla?.perfBudget,
+      version: TESLA_DS_VERSION,
+      tokens: mergedTokens,
+      components: mergedContracts
     };
-  }, [mergedTokens]);
+  }, [mergedTokens, mergedContracts]);
 
   return (
     <div

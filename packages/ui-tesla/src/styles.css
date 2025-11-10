@@ -1,28 +1,63 @@
 @font-face {
-  font-family: "Tesla Display";
+  font-family: "Universal Sans Display";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/14488/TESLA.woff") format("woff");
+  src: url("./fonts/Universal-Sans-Display-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Universal Sans Display";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/Universal-Sans-Display-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Universal Sans Text";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/Universal-Sans-Text-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Universal Sans Text";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/Universal-Sans-Text-Medium.woff2") format("woff2");
 }
 
 :root {
-  --tesla-font-family: "Tesla Display", "Helvetica Neue", "Rubik", "Segoe UI", sans-serif;
-  --tesla-color-text: #393c41;
+  --tesla-font-family-display: "Universal Sans Display", "Helvetica Neue", "Rubik", "Segoe UI", sans-serif;
+  --tesla-font-family-text: "Universal Sans Text", "Helvetica Neue", "Rubik", "Segoe UI", sans-serif;
+  --tesla-font-family-mono: "Fira Code", "SFMono-Regular", "Segoe UI Mono", monospace;
+  --tesla-letter-spacing-wide: 0.4rem;
+  --tesla-color-text: #171a20;
+  --tesla-color-muted: #5c5e62;
   --tesla-color-primary: #000000;
   --tesla-color-accent: #e82127;
-  --tesla-color-surface: rgba(255, 255, 255, 0.92);
-  --tesla-color-muted: rgba(57, 60, 65, 0.72);
-  --tesla-color-border: rgba(255, 255, 255, 0.24);
-  --tesla-transition-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --tesla-color-surface: rgba(255, 255, 255, 0.94);
+  --tesla-color-surface-contrast: #050608;
+  --tesla-color-border: rgba(23, 26, 32, 0.08);
+  --tesla-transition-standard: cubic-bezier(0.5, 0, 0, 0.75);
+  --tesla-transition-entrance: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --tesla-spacing-base: 0.5rem;
+  --tesla-spacing-double: 1rem;
+  --tesla-grid-gap: 1.5rem;
+  --tesla-section-padding: clamp(3rem, 6vw, 7rem);
+  --tesla-shadow-card: 0 8px 16px rgba(0, 0, 0, 0.16);
+  --tesla-shadow-panel: 0 25px 65px rgba(0, 0, 0, 0.35);
   --tesla-section-bg-image: none;
   --tesla-section-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%);
 }
 
 .tesla-theme {
-  font-family: var(--tesla-font-family);
+  font-family: var(--tesla-font-family-text);
   color: var(--tesla-color-text);
-  background-color: inherit;
+  background-color: var(--tesla-color-surface-contrast);
   min-height: 100%;
 }
 
@@ -32,19 +67,24 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 2vw, 2.5rem);
-  padding: 1.25rem clamp(1.5rem, 4vw, 5rem);
-  backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  gap: clamp(var(--tesla-spacing-double), 2vw, calc(var(--tesla-grid-gap) + 0.5rem));
+  padding: calc(var(--tesla-spacing-double) * 1.25)
+    clamp(1.5rem, 4vw, 5rem);
+  backdrop-filter: blur(18px);
+  /* Fallback for browsers that do not support color-mix() */
+  background-color: rgba(255, 255, 255, 0.85); /* Adjust as appropriate for var(--tesla-color-surface) */
+  background-color: color-mix(in srgb, var(--tesla-color-surface) 85%, transparent);
+  border-bottom: 1px solid var(--tesla-color-border);
+  box-shadow: var(--tesla-shadow-card);
 }
 
 .tesla-header__brand {
   font-size: 1.1rem;
-  letter-spacing: 0.4rem;
+  letter-spacing: var(--tesla-letter-spacing-wide);
   font-weight: 600;
   color: var(--tesla-color-primary);
   text-transform: uppercase;
+  font-family: var(--tesla-font-family-display);
 }
 
 .tesla-header__nav {
@@ -96,8 +136,8 @@
 .tesla-header__action {
   padding: 0.45rem 1.2rem;
   border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--tesla-color-border);
+  background-color: color-mix(in srgb, var(--tesla-color-surface) 92%, transparent);
   color: var(--tesla-color-primary);
   font-size: 0.85rem;
   text-decoration: none;
@@ -112,7 +152,7 @@
 }
 
 .tesla-header__action:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: color-mix(in srgb, var(--tesla-color-primary) 6%, var(--tesla-color-surface));
 }
 
 .tesla-header__action--accent:hover {
@@ -143,7 +183,7 @@
 .tesla-section {
   position: relative;
   min-height: 90vh;
-  padding: clamp(3rem, 6vw, 7rem) clamp(1.5rem, 6vw, 8rem);
+  padding: var(--tesla-section-padding) clamp(1.5rem, 6vw, 8rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -155,7 +195,7 @@
   background-image: var(--tesla-section-overlay), var(--tesla-section-bg-image);
   background-size: cover;
   background-position: center;
-  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--tesla-shadow-panel);
 }
 
 .tesla-section__top {
@@ -220,8 +260,8 @@
 .tesla-section__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1.5rem;
-  padding-top: 1.5rem;
+  gap: var(--tesla-grid-gap);
+  padding-top: var(--tesla-spacing-double);
 }
 
 .tesla-section__stat-value {
@@ -275,14 +315,14 @@
 .tesla-config-panel {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  gap: var(--tesla-grid-gap);
+  padding: clamp(var(--tesla-spacing-double), 3vw, 2.5rem);
   border-radius: 1.5rem;
-  background: rgba(11, 11, 15, 0.85);
+  background: color-mix(in srgb, var(--tesla-color-primary) 85%, transparent);
   backdrop-filter: blur(20px);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.45);
+  color: var(--tesla-color-surface);
+  border: 1px solid color-mix(in srgb, var(--tesla-color-border) 55%, white);
+  box-shadow: var(--tesla-shadow-panel);
 }
 
 .tesla-config-panel__header {
@@ -337,7 +377,7 @@
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--tesla-color-surface) 20%, transparent);
 }
 
 .tesla-config-panel__section:last-of-type {
@@ -395,8 +435,8 @@
   align-items: flex-start;
   gap: 0.5rem;
   padding: 1rem 1.25rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--tesla-color-surface) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tesla-color-surface) 10%, transparent);
   border-radius: 1rem;
   color: inherit;
   text-align: left;

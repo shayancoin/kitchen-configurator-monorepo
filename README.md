@@ -75,3 +75,16 @@ when Module Federation is disabled, so we can keep builds deterministic.
 - **Observability (Step 10)**: All runtimes emit OpenTelemetry traces. `@repo/observability/otel-node`/`otel-browser` wire Node + browser spans, Go/Python services initialize OTLP exporters, and `ops/otel/collector.yaml` fans out traces → Tempo + spanmetrics → Prometheus. Details at `docs/observability.md`.
 - **CI/CD & Infra (Step 11)**: `.github/workflows/ci.yml` runs pnpm/turbo, Go, Rust, Python, and Helm lint jobs per push/PR. `infra/helm/lib-service` exposes reusable deployment macros and the `gateway` chart consumes them (with a queue-theory sizing question baked into the README). `scripts/new-pr.sh` standardizes PR branch naming.
 - **Validation Harness**: `packages/tests-fusion` hosts the fusion Vitest suite (catalog → pricing → sprites) while `scripts/full-validation.sh` runs the full matrix (pnpm, Go, Rust, Python) locally.
+
+## Step 13 – Optimization Pass Highlights
+
+- **Tesla design system parity**: `@repo/ui-tesla` now bundles the Universal Sans font stack + raw Tesla Design System (TDS) tokens derived from `/Users/shayanbozorgmanesh/Developer/tesla/CSS/main.*.css`. Tokens cover typography, color ramps, spacing, and elevation shadows; `TeslaThemeProvider` publishes them on `window.tesla.tokens` alongside component contracts for Header, Section, and ConfiguratorPanel primitives.
+- **Global perf contract**: `window.tesla.metrics` captures LCP/FID/TTI in real time. Shell initializes `initPerfBudget()` → `PerfBudgetIndicator`, targeting TTI ≤ 2000 ms (see `apps/shell/components/PerfBudgetIndicator.tsx`). Metrics stream through a custom `tesla:perf-update` event so remotes can join the SLO conversation.
+- **Configurator code-splitting**: `apps/web/app/[locale]/configurator` lazy-loads the Tesla preview shell, targeting a reduced initial JS payload for locales that do not need the configurator hero during SSR while keeping the CSS + tokens scoped to that chunk.
+- **Go test reliability**: `scripts/full-validation.sh` now shells Go unit tests through `golang:1.23.0` when running on macOS, sidestepping the `LC_UUID` dyld issue while still honoring the local toolchain on Linux builders.
+
+## Step 14 – Phase Prep & Hooks
+
+- `docs/phase-plan.md` tracks the phase-by-phase DAG (Phases 1–7) and the corresponding `feature/phase-*` branches created via `scripts/phase-prep.sh`.
+- `docs/repo-tree.md` captures the repo tree (depth ≤2) so future contributors know where to anchor expandable hooks.
+- `// EXTEND_AI_HERE` beacons live in the local configurator panel, AI advisor server, and viewer2d WebGPU TODO to keep CPSAT/RAG/visual extensions discoverable.

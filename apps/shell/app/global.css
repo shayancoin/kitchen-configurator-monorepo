@@ -29,3 +29,48 @@ body {
   flex-direction: column;
   gap: 1.25rem;
 }
+
+.perf-indicator {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2.5rem);
+  bottom: clamp(1rem, 3vw, 2.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, auto));
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(5, 6, 8, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  font-family: var(--tesla-font-family-text, "Inter", sans-serif);
+  z-index: 25;
+  backdrop-filter: blur(10px);
+  /* Fallback for browsers without backdrop-filter support */
+}
+
+@supports (backdrop-filter: blur(10px)) {
+  .perf-indicator {
+    background: rgba(5, 6, 8, 0.86);
+  }
+}
+
+.perf-indicator__label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.perf-indicator__value {
+  margin: 0.25rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.perf-indicator--ok {
+  border-color: rgba(17, 180, 102, 0.6);
+}
+
+.perf-indicator--warn {
+  border-color: rgba(232, 33, 39, 0.6);
+}

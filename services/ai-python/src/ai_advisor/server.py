@@ -53,7 +53,16 @@ def get_pipeline() -> RAGPipeline:
 
 @lru_cache
 def _build_pipeline() -> RAGPipeline:
+    """
+    Constructs and returns a configured RAGPipeline based on current application settings.
+    
+    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist before embedder construction (allows full strategy selection) and after pipeline construction (for post-processing/tracing).
+    
+    Returns:
+        RAGPipeline: A pipeline configured with the application's vector store, embedder, LLM, default_k, and generator_label.
+    """
     settings = get_settings()
+    # EXTEND_AI_HERE: pre-embedder hook (mutate settings, select custom embedder/vector-store strategy).
     embedder = _build_embedder(settings)
     dim = _infer_dim(embedder, settings.embed_dim)
     store = build_store(dsn=settings.vector_dsn, table=settings.vector_table, dim=dim)
@@ -66,6 +75,8 @@ def _build_pipeline() -> RAGPipeline:
         default_k=settings.top_k,
         generator_label=label,
     )
+    # EXTEND_AI_HERE: post-pipeline hook (observe, trace, or wrap the constructed RAGPipeline;
+    # reranking is selected at invocation time via InferenceRequest.rerank, not set here).
     return pipeline
 
 
@@ -85,9 +96,19 @@ def _infer_dim(embedder: Embedder, fallback: int) -> int:
 
 
 def _build_llm(settings: Settings) -> LanguageModel:
+    """
+    Constructs and returns a language model configured from the provided settings.
+    
+    Parameters:
+        settings (Settings): Configuration object; if `settings.openai_api_key` is set, an OpenAI-backed model is returned, otherwise a deterministic fallback is used.
+    
+    Returns:
+        LanguageModel: An OpenAI-backed model when `settings.openai_api_key` is present, otherwise an `EchoLLM` fallback.
+    """
     if settings.openai_api_key:
         llm = ChatOpenAI(temperature=0.2, api_key=settings.openai_api_key, model_name="gpt-4o-mini")
         return LangChainLLMAdapter(llm)
+    # EXTEND_AI_HERE: drop in CSP/CP-SAT backed reasoning once deterministic seeds land (Phase 7).
     return EchoLLM()
 
 
