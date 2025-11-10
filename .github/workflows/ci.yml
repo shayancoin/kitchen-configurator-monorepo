@@ -115,6 +115,8 @@ jobs:
 
   repo_tree:
     name: Verify repo-tree.md is up-to-date
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
