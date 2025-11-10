@@ -1,0 +1,1 @@
+- M/M/c: ρ=λ/(cμ)<0.6. Erlang-C P(wait) and W_q = P(wait)/(cμ−λ) ≤ 100 ms per service. Provide λ, μ, c used.

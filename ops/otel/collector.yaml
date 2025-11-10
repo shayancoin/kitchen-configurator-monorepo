@@ -14,14 +14,33 @@ processors:
     check_interval: 2s
     limit_percentage: 80
     spike_limit_percentage: 25
+  tail_sampling:
+    decision_wait: 10s
+    num_traces: 10000
+    expected_new_traces_per_sec: 1500
+    policies:
+      - name: errors
+        type: status_code
+        status_code:
+          status_codes: [ERROR]
+      - name: slow-requests
+        type: latency
+        latency:
+          threshold: 300ms
+      - name: probabilistic-sample
+        type: probabilistic
+        probabilistic:
+          sampling_percentage: 5
 
 exporters:
   logging:
-    loglevel: debug
-  otlphttp/prometheus:
-    endpoint: http://prometheus:9090/api/v1/otlp
-  otlphttp/grafana:
-    endpoint: http://tempo:4318/v1/traces
+    loglevel: info
+  otlphttp:
+    endpoint: ${env:OTLP_ENDPOINT}
+    tls:
+      insecure: true
+  prometheusremotewrite:
+    endpoint: ${env:PROM_REMOTE_WRITE_ENDPOINT}
     tls:
       insecure: true
 
@@ -42,8 +61,8 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [memory_limiter, batch]
-      exporters: [otlphttp/grafana, logging, spanmetrics]
+      processors: [memory_limiter, tail_sampling, batch]
+      exporters: [otlphttp, logging, spanmetrics]
     metrics/spanmetrics:
       receivers: [spanmetrics]
-      exporters: [otlphttp/prometheus]
+      exporters: [otlphttp, prometheusremotewrite]
