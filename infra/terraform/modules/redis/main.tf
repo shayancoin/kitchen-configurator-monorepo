@@ -1,3 +1,7 @@
+data "aws_vpc" "selected" {
+  id = var.vpc_id
+}
+
 resource "aws_elasticache_subnet_group" "this" {
   name       = "redis-${var.tags["env"]}"
   subnet_ids = var.subnet_ids
@@ -13,8 +17,9 @@ resource "aws_security_group" "redis" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_vpc.selected.cidr_block]
   }
+}
 
   tags = var.tags
 }
