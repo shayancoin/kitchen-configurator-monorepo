@@ -67,11 +67,10 @@ export const TeslaThemeProvider = ({
     }
 
     window.tesla = {
+      ...(window.tesla ?? {}),
       version: "ds-1.1",
       tokens: mergedTokens,
-      components: mergedContracts,
-      metrics: window.tesla?.metrics,
-      perfBudget: window.tesla?.perfBudget
+      components: mergedContracts
     };
   }, [mergedTokens, mergedContracts]);
 
