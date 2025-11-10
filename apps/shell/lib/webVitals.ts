@@ -95,7 +95,7 @@ export const onTTI = (handler: VitalCallback): Unsubscribe => {
     typeof PerformanceObserver === "undefined" ||
     !PerformanceObserver.supportedEntryTypes?.includes("longtask")
   ) {
-    const fallbackValue = now();
+    const fallbackValue = 0; // Assume interactive if no task data available
     emitSpan("TTI", fallbackValue);
     handler(fallbackValue);
     return noop;
