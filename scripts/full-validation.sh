@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NODE_BIN="$ROOT_DIR/.tooling/node-v20.18.0-darwin-arm64/bin"
 GO_BIN="$ROOT_DIR/.tooling/go1.22.2/bin/go"
-GO_DOCKER_IMAGE="${GO_DOCKER_IMAGE:-golang:1.22.2}"
+GO_DOCKER_IMAGE="${GO_DOCKER_IMAGE:-golang:1.23.0}"
 PNPM_BIN=(npx pnpm@10.19.0)
 UNAME="$(uname -s)"
 
