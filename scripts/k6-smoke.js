@@ -2,15 +2,15 @@ import http from "k6/http";
 import { Trend } from "k6/metrics";
 import { check, sleep } from "k6";
 
-const baseUrl = __ENV.KITCHEN_BASE_URL ?? "http://localhost:3000";
-const locale = __ENV.KITCHEN_LOCALE ?? "en";
+const baseUrl = __ENV.KITCHEN_BASE_URL || "http://localhost:3000";
+const locale = __ENV.KITCHEN_LOCALE || "en";
 
 const configuratorTTFB = new Trend("configurator_ttfb", true);
 const graphQLDuration = new Trend("graphql_hot_duration", true);
 
 export const options = {
-  vus: Number(__ENV.K6_VUS ?? 5),
-  duration: __ENV.K6_DURATION ?? "1m",
+  vus: Number(__ENV.K6_VUS || 5),
+  duration: __ENV.K6_DURATION || "1m",
   thresholds: {
     http_req_duration: ["p(95)<2000"],
     configurator_ttfb: ["avg<500"],
@@ -69,5 +69,5 @@ export default function smoke() {
     "graphql body": (res) => Boolean(res.json()?.data)
   });
 
-  sleep(Number(__ENV.K6_SLEEP ?? 1));
+  sleep(Number(__ENV.K6_SLEEP || 1));
 }
