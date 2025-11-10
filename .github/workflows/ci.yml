@@ -88,3 +88,48 @@ jobs:
         run: |
           helm dependency update
           helm lint . -f ../values.example.yaml
+
+  shell_bundle:
+    name: Shell bundle stats
+    permissions:
+      contents: read
+    needs: node
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build shell bundle with analyzer
+        run: ANALYZE=true pnpm --filter @repo/shell build
+      - name: Upload analyzer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shell-bundle-analyzer
+          path: apps/shell/.next/analyze
+
+  repo_tree:
+    name: Verify repo-tree.md is up-to-date
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Generate repo tree
+        run: python3 scripts/generate-repo-tree.py > /tmp/repo-tree-generated.md
+      - name: Compare with committed file
+        run: |
+          if ! diff -u docs/repo-tree.md /tmp/repo-tree-generated.md; then
+            echo "ERROR: docs/repo-tree.md is out of sync with the actual repository structure."
+            echo "Please run 'python3 scripts/generate-repo-tree.py > docs/repo-tree.md' and commit the changes."
+            exit 1
+          fi
+          echo "✓ docs/repo-tree.md is up-to-date"

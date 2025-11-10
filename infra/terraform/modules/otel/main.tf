@@ -45,6 +45,13 @@ exporters:
   prometheusremotewrite:
     endpoint: ${var.prometheus_remote_write}
 
+connectors:
+  spanmetrics:
+    metrics_flush_interval: 15s
+    dimensions:
+      - name: http.method
+      - name: http.route
+
 service:
   telemetry:
     logs:

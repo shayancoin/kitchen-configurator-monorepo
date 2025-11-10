@@ -1,3 +1,4 @@
+import bundleAnalyzer from "@next/bundle-analyzer";
 import { config as sharedConfig } from "@repo/next-config";
 import { withConditionalModuleFederation } from "@repo/config";
 import type { NextConfig } from "next";
@@ -21,4 +22,8 @@ const configWithMF: NextConfig = withConditionalModuleFederation(sharedConfig, {
   }
 });
 
-export default configWithMF;
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true"
+});
+
+export default withBundleAnalyzer(configWithMF);

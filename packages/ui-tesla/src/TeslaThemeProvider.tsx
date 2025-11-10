@@ -10,6 +10,7 @@ import {
   defaultComponentContracts,
   type TeslaComponentContracts
 } from "./contracts";
+import { TESLA_DS_VERSION } from "./version";
 
 export type TeslaThemeProviderProperties = {
   readonly children: ReactNode;
@@ -19,16 +20,15 @@ export type TeslaThemeProviderProperties = {
   readonly contracts?: Partial<TeslaComponentContracts>;
 };
 
-declare global {
-  interface Window {
-    tesla?: TeslaGlobalContract;
-  }
-}
-
 export type TeslaPerfMetrics = {
   readonly tti?: number;
   readonly lcp?: number;
   readonly fid?: number;
+};
+
+export type TeslaPerfBudgetState = {
+  readonly failed: boolean;
+  readonly reasons: readonly string[];
 };
 
 export type TeslaGlobalContract = {
@@ -36,6 +36,7 @@ export type TeslaGlobalContract = {
   readonly tokens: TeslaTokens;
   readonly components: TeslaComponentContracts;
   readonly metrics?: TeslaPerfMetrics;
+  readonly perfBudget?: TeslaPerfBudgetState;
 };
 
 export const TeslaThemeProvider = ({
@@ -51,13 +52,24 @@ export const TeslaThemeProvider = ({
   );
   const variables = tokensToCSSVariables(mergedTokens);
   const mergedContracts = useMemo<TeslaComponentContracts>(
-    () => ({
-      header: contracts?.header ?? defaultComponentContracts.header,
-      section: contracts?.section ?? defaultComponentContracts.section,
-      configuratorPanel:
-        contracts?.configuratorPanel ??
-        defaultComponentContracts.configuratorPanel
-    }),
+    () => {
+      // Use structuredClone to create defensive copies and prevent aliasing of
+      // default contracts into window.tesla.components. Without cloning, external
+      // mutations to window.tesla.components would corrupt module-level defaults.
+      const resolved: TeslaComponentContracts = {
+        header: structuredClone(
+          contracts?.header ?? defaultComponentContracts.header
+        ),
+        section: structuredClone(
+          contracts?.section ?? defaultComponentContracts.section
+        ),
+        configuratorPanel: structuredClone(
+          contracts?.configuratorPanel ??
+            defaultComponentContracts.configuratorPanel
+        )
+      };
+      return resolved;
+    },
     [contracts]
   );
 
@@ -67,10 +79,11 @@ export const TeslaThemeProvider = ({
     }
 
     window.tesla = {
-      version: "ds-1.1",
+      metrics: window.tesla?.metrics,
+      perfBudget: window.tesla?.perfBudget,
+      version: TESLA_DS_VERSION,
       tokens: mergedTokens,
-      components: mergedContracts,
-      metrics: window.tesla?.metrics
+      components: mergedContracts
     };
   }, [mergedTokens, mergedContracts]);
 

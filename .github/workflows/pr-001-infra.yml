@@ -1,4 +1,6 @@
 name: pr-001-infra
+permissions:
+  contents: read
 
 on:
   pull_request:
@@ -64,7 +66,7 @@ jobs:
         with: { sarif_file: checkov.sarif }
 
   plan:
-    if: ${{ secrets.AWS_ROLE_TO_ASSUME != '' && secrets.TF_STATE_BUCKET != '' && secrets.TF_STATE_DDB != '' && secrets.AWS_REGION != '' }}
+    if: ${{ github.secret_source == 'Actions' }}
     needs: [fmt_validate, tflint, tfsec, checkov]
     runs-on: ubuntu-22.04
     permissions:
@@ -72,6 +74,23 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Validate required secrets
+        env:
+          AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
+          TF_STATE_DDB: ${{ secrets.TF_STATE_DDB }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          missing=()
+          for name in AWS_ROLE_TO_ASSUME TF_STATE_BUCKET TF_STATE_DDB AWS_REGION; do
+            if [ -z "${!name}" ]; then
+              missing+=("$name")
+            fi
+          done
+          if [ "${#missing[@]}" -gt 0 ]; then
+            printf 'Missing required secrets: %s\n' "${missing[*]}" >&2
+            exit 1
+          fi
       - uses: hashicorp/setup-terraform@v3
         with: { terraform_version: 1.9.5 }
       - uses: aws-actions/configure-aws-credentials@v4

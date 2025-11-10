@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NODE_BIN="$ROOT_DIR/.tooling/node-v20.18.0-darwin-arm64/bin"
 GO_BIN="$ROOT_DIR/.tooling/go1.22.2/bin/go"
-GO_DOCKER_IMAGE="${GO_DOCKER_IMAGE:-golang:1.22.2}"
+GO_DOCKER_IMAGE="${GO_DOCKER_IMAGE:-golang:1.23.0}"
 PNPM_BIN=(npx pnpm@10.19.0)
 UNAME="$(uname -s)"
 
@@ -24,16 +24,19 @@ echo "[validation] turbo test/build"
 "${PNPM_BIN[@]}" turbo run test --continue
 "${PNPM_BIN[@]}" turbo run build --continue
 
+# run_go_tests runs the Go test suite for the specified service.
+# On macOS, attempts to run the repository's Linux test wrapper via Docker and skips with a warning if Docker is unavailable.
+# On non-macOS, invokes the configured Go binary to run `go test ./...` inside the service directory and skips with a warning if the Go toolchain is not found.
+# $1 - service name (directory name under services/)
 run_go_tests() {
   local svc="$1"
   echo "[validation] go test services/$svc"
   if [[ "$UNAME" == "Darwin" ]]; then
     if command -v docker >/dev/null 2>&1; then
-      docker run --rm \
-        -v "$ROOT_DIR":/workspace \
-        -w "/workspace/services/$svc" \
-        "$GO_DOCKER_IMAGE" \
-        bash -lc "go test ./..."
+      (
+        cd "$ROOT_DIR/services/$svc"
+        "$ROOT_DIR/scripts/go-test-linux.sh"
+      )
     else
       echo "[validation] skipping Go tests for $svc (Docker required on macOS to avoid LC_UUID bug)" >&2
     fi

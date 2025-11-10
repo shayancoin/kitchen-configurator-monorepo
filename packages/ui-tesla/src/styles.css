@@ -71,6 +71,8 @@
   padding: calc(var(--tesla-spacing-double) * 1.25)
     clamp(1.5rem, 4vw, 5rem);
   backdrop-filter: blur(18px);
+  /* Fallback for browsers that do not support color-mix() */
+  background-color: rgba(255, 255, 255, 0.85); /* Adjust as appropriate for var(--tesla-color-surface) */
   background-color: color-mix(in srgb, var(--tesla-color-surface) 85%, transparent);
   border-bottom: 1px solid var(--tesla-color-border);
   box-shadow: var(--tesla-shadow-card);
