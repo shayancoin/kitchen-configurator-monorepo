@@ -69,6 +69,8 @@ export const TeslaThemeProvider = ({
     window.tesla = {
       metrics: window.tesla?.metrics,
       perfBudget: window.tesla?.perfBudget,
+      // Version updated from 'ds-1' to 'ds-1.1'.
+      // [CHANGELOG] Minor update: Please document changes between ds-1 and ds-1.1 here or in the project changelog.
       version: "ds-1.1",
       tokens: mergedTokens,
       components: mergedContracts
