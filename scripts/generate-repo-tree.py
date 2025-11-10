@@ -31,7 +31,7 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
     """
     Produce a list of text lines representing the directory tree rooted at `root_path` up to a given depth.
     
-    Each returned string is a single tree line formatted as "- name/" for directories and "- name" for files. Entries are indented by two spaces per depth level. Directories appear before files and entries are ordered by name. Names present in the module's ignore sets or that start with a dot are omitted. If a directory cannot be read due to permissions, that subtree is skipped.
+    Each returned string is a single tree line formatted as "- name/" for directories and "- name" for files. Entries are indented by two spaces per depth level. Directories appear before files and entries are ordered by name. Names present in the module's ignore sets or that start with a dot are omitted. If a directory cannot be read due to permissions, that subtree is skipped. Circular symlinks are detected by tracking visited canonical paths.
     
     Parameters:
         root_path (Path): Root directory to generate the tree from.
@@ -41,6 +41,7 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
         list[str]: Lines representing the repository tree in textual form.
     """
     lines = []
+    visited = set()  # Track canonical paths to prevent circular symlink loops
     
     def walk_dir(path: Path, prefix: str = "", depth: int = 0) -> None:
         """
@@ -55,6 +56,7 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
             - Skips entries whose names are filtered by `should_ignore`.
             - Stops recursing when `depth` exceeds `max_depth`.
             - Silently skips directories that raise `PermissionError` when iterated.
+            - Prevents infinite loops by tracking visited canonical directory paths.
         """
         if depth > max_depth:
             return
@@ -66,10 +68,37 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
         
         # Filter out ignored items before sorting
         filtered = [item for item in all_items if not should_ignore(item.name)]
-        items = sorted(filtered, key=lambda x: (not x.is_dir(), x.name))
         
-        for item in items:
-            if item.is_dir():
+        # Cache is_dir() results to avoid redundant stat syscalls
+        # Build list of (item, is_dir) pairs
+        items_with_type = []
+        for item in filtered:
+            try:
+                is_dir = item.is_dir()
+                items_with_type.append((item, is_dir))
+            except (PermissionError, OSError):
+                # Skip items we cannot stat
+                continue
+        
+        # Sort using cached is_dir values: directories first, then by name
+        items_with_type.sort(key=lambda x: (not x[1], x[0].name))
+        
+        for item, is_dir in items_with_type:
+            if is_dir:
+                # Resolve canonical path to detect circular symlinks
+                try:
+                    canonical_path = item.resolve()
+                except (PermissionError, OSError):
+                    # Skip if we cannot resolve the path
+                    continue
+                
+                # Skip if we've already visited this canonical directory
+                if canonical_path in visited:
+                    continue
+                
+                # Add to visited set before recursing
+                visited.add(canonical_path)
+                
                 lines.append(f"{prefix}- {item.name}/")
                 if depth < max_depth:
                     walk_dir(item, prefix + "  ", depth + 1)
