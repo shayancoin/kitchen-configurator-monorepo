@@ -21,9 +21,6 @@ resource "aws_security_group" "redis" {
   }
 }
 
-  tags = var.tags
-}
-
 resource "aws_security_group_rule" "ingress_from_workers" {
   for_each                 = toset(var.allowed_security_groups)
   security_group_id        = aws_security_group.redis.id
@@ -56,5 +53,4 @@ resource "aws_elasticache_replication_group" "this" {
   subnet_group_name           = aws_elasticache_subnet_group.this.name
 
   tags = var.tags
-}
 }
