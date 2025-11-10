@@ -7,7 +7,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NODE_BIN="$ROOT_DIR/.tooling/node-v20.18.0-darwin-arm64/bin"
 GO_BIN="$ROOT_DIR/.tooling/go1.22.2/bin/go"
 GO_DOCKER_IMAGE="${GO_DOCKER_IMAGE:-golang:1.22.2}"
-PNPM_BIN=(npx pnpm@10.19.0)
+PNPM_VERSION="${PNPM_VERSION:-$(node -e "const pkg = require('$ROOT_DIR/package.json'); console.log(pkg.packageManager?.split('@')[1] || '10.19.0')")}"
+PNPM_BIN=(npx "pnpm@$PNPM_VERSION")
 UNAME="$(uname -s)"
 
 if [[ -d "$NODE_BIN" ]]; then
