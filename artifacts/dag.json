@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "repoPath": "/Users/shayanbozorgmanesh/Developer/parviz/--root",
+    "analyzedFiles": 0,
+    "totalNodes": 0,
+    "totalEdges": 0,
+    "maxDepth": 0,
+    "topoOrderSample": [],
+    "hasCycle": false,
+    "denseModules": [],
+    "errors": []
+  },
+  "topoOrder": []
+}

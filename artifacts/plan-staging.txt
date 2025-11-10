@@ -1,0 +1,105 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform planned the following actions, but then encountered a problem:
+
+  # module.secrets.random_password.aurora will be created
+  + resource "random_password" "aurora" {
+      + bcrypt_hash = (sensitive value)
+      + id          = (known after apply)
+      + length      = 24
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (sensitive value)
+      + special     = true
+      + upper       = true
+    }
+
+  # module.secrets.random_password.graphql will be created
+  + resource "random_password" "graphql" {
+      + bcrypt_hash = (sensitive value)
+      + id          = (known after apply)
+      + length      = 48
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (sensitive value)
+      + special     = false
+      + upper       = true
+    }
+
+  # module.secrets.random_password.kafka will be created
+  + resource "random_password" "kafka" {
+      + bcrypt_hash = (sensitive value)
+      + id          = (known after apply)
+      + length      = 28
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (sensitive value)
+      + special     = true
+      + upper       = true
+    }
+
+  # module.secrets.random_password.redis will be created
+  + resource "random_password" "redis" {
+      + bcrypt_hash = (sensitive value)
+      + id          = (known after apply)
+      + length      = 32
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (sensitive value)
+      + special     = false
+      + upper       = true
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + aurora_shard_strategy = [
+      + {
+          + capacity     = "serverless-v2"
+          + hash_formula = "fnv1a64(configuration_id) % 4"
+          + modulus      = 0
+          + name         = "staging-aurora-pg-shard-0"
+        },
+      + {
+          + capacity     = "serverless-v2"
+          + hash_formula = "fnv1a64(configuration_id) % 4"
+          + modulus      = 1
+          + name         = "staging-aurora-pg-shard-1"
+        },
+      + {
+          + capacity     = "serverless-v2"
+          + hash_formula = "fnv1a64(configuration_id) % 4"
+          + modulus      = 2
+          + name         = "staging-aurora-pg-shard-2"
+        },
+      + {
+          + capacity     = "serverless-v2"
+          + hash_formula = "fnv1a64(configuration_id) % 4"
+          + modulus      = 3
+          + name         = "staging-aurora-pg-shard-3"
+        },
+    ]
+  + istio_ingress_gateway = "staging.kitchen.example.com"
