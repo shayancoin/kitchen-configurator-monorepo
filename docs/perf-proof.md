@@ -1,0 +1,3 @@
+- Amdahl: S = 1 / ((1−p)+p/s). With p≈0.6 deferred, S≈2.5×. If baseline B=1500 ms, post-split B'≈600 ms.
+- Compositor: O(L·P). SIMD+threads reduces wall time ≈ (p·s)/(overheads); budget ≤12 ms at 2k×1k, 30 layers.
+- End-to-end p95: T_total = T_net + T_compose + T_layout. Enforce {120,80,100} ms respectively.

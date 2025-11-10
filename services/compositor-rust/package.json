@@ -3,6 +3,6 @@
   "private": true,
   "scripts": {
     "build": "wasm-pack build --target web --out-dir pkg --out-name compositor --scope repo",
-    "test": "cargo test"
+    "test": "bash ./scripts/test.sh"
   }
 }

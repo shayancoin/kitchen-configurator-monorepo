@@ -1,0 +1,1141 @@
+
+       _               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By Prisma Cloud | version: 3.2.491 
+terraform scan results:
+
+Passed checks: 86, Failed checks: 49, Skipped checks: 0
+
+Check: CKV_AWS_250: "Ensure that RDS PostgreSQL instances use a non vulnerable version with the log_fdw extension (https://aws.amazon.com/security/security-bulletins/AWS-2022-004/)"
+	PASSED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_96: "Ensure all data stored in Aurora is securely encrypted at rest"
+	PASSED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_162: "Ensure RDS cluster has IAM authentication enabled"
+	PASSED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_133: "Ensure that RDS instances has backup policy"
+	PASSED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_354: "Ensure RDS Performance Insights are encrypted using KMS CMKs"
+	PASSED for resource: module.aurora.aws_rds_cluster_instance.this[0]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_17: "Ensure all data stored in RDS is not publicly accessible"
+	PASSED for resource: module.aurora.aws_rds_cluster_instance.this[0]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_354: "Ensure RDS Performance Insights are encrypted using KMS CMKs"
+	PASSED for resource: module.aurora.aws_rds_cluster_instance.this[1]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_17: "Ensure all data stored in RDS is not publicly accessible"
+	PASSED for resource: module.aurora.aws_rds_cluster_instance.this[1]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role.cluster
+	File: /modules/eks/main.tf:1-18
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_61: "Ensure AWS IAM policy does not allow assume role permission across all services"
+	PASSED for resource: module.eks.aws_iam_role.cluster
+	File: /modules/eks/main.tf:1-18
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_60: "Ensure IAM role allows only specific services or principals to assume it"
+	PASSED for resource: module.eks.aws_iam_role.cluster
+	File: /modules/eks/main.tf:1-18
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.cluster
+	File: /modules/eks/main.tf:20-23
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.vpc_controller
+	File: /modules/eks/main.tf:25-28
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_260: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80"
+	PASSED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	PASSED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_277: "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1"
+	PASSED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	PASSED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_339: "Ensure EKS clusters run on a supported Kubernetes version"
+	PASSED for resource: module.eks.aws_eks_cluster.this
+	File: /modules/eks/main.tf:45-58
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role.node_group
+	File: /modules/eks/main.tf:60-75
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_61: "Ensure AWS IAM policy does not allow assume role permission across all services"
+	PASSED for resource: module.eks.aws_iam_role.node_group
+	File: /modules/eks/main.tf:60-75
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_60: "Ensure IAM role allows only specific services or principals to assume it"
+	PASSED for resource: module.eks.aws_iam_role.node_group
+	File: /modules/eks/main.tf:60-75
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_amazon_eks_worker
+	File: /modules/eks/main.tf:77-80
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_cni
+	File: /modules/eks/main.tf:82-85
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_ecr
+	File: /modules/eks/main.tf:87-90
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_100: "Ensure AWS EKS node group does not have implicit SSH access from 0.0.0.0/0"
+	PASSED for resource: module.eks.aws_eks_node_group.this
+	File: /modules/eks/main.tf:92-110
+	Calling File: /main.tf:28-38
+Check: CKV_AWS_66: "Ensure that CloudWatch Log Group specifies retention days"
+	PASSED for resource: module.kafka.aws_cloudwatch_log_group.msk
+	File: /modules/kafka/main.tf:11-15
+	Calling File: /main.tf:64-74
+Check: CKV_AWS_291: "Ensure MSK nodes are private"
+	PASSED for resource: module.kafka.aws_msk_cluster.this
+	File: /modules/kafka/main.tf:17-51
+	Calling File: /main.tf:64-74
+Check: CKV_AWS_80: "Ensure MSK Cluster logging is enabled"
+	PASSED for resource: module.kafka.aws_msk_cluster.this
+	File: /modules/kafka/main.tf:17-51
+	Calling File: /main.tf:64-74
+Check: CKV_AWS_130: "Ensure VPC subnets do not assign public IP by default"
+	PASSED for resource: module.network.aws_subnet.private
+	File: /modules/network/main.tf:32-43
+	Calling File: /main.tf:14-20
+Check: CKV_AWS_260: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80"
+	PASSED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	PASSED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_277: "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1"
+	PASSED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	PASSED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_260: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80"
+	PASSED for resource: module.redis.aws_security_group_rule.ingress_from_workers["${aws_security_group.cluster.id}"]
+	File: /modules/redis/main.tf:22-30
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	PASSED for resource: module.redis.aws_security_group_rule.ingress_from_workers["${aws_security_group.cluster.id}"]
+	File: /modules/redis/main.tf:22-30
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_277: "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1"
+	PASSED for resource: module.redis.aws_security_group_rule.ingress_from_workers["${aws_security_group.cluster.id}"]
+	File: /modules/redis/main.tf:22-30
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	PASSED for resource: module.redis.aws_security_group_rule.ingress_from_workers["${aws_security_group.cluster.id}"]
+	File: /modules/redis/main.tf:22-30
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_31: "Ensure all data stored in the ElastiCache Replication Group is securely encrypted at transit and has auth token"
+	PASSED for resource: module.redis.aws_elasticache_replication_group.this
+	File: /modules/redis/main.tf:32-51
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_29: "Ensure all data stored in the ElastiCache Replication Group is securely encrypted at rest"
+	PASSED for resource: module.redis.aws_elasticache_replication_group.this
+	File: /modules/redis/main.tf:32-51
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_30: "Ensure all data stored in the ElastiCache Replication Group is securely encrypted at transit"
+	PASSED for resource: module.redis.aws_elasticache_replication_group.this
+	File: /modules/redis/main.tf:32-51
+	Calling File: /main.tf:53-62
+Check: CKV_AWS_93: "Ensure S3 bucket policy does not lockout all but root user. (Prevent lockouts needing root account fixes)"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_53: "Ensure S3 bucket has block public ACLS enabled"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket_public_access_block.assets
+	File: /modules/s3_cf/main.tf:29-35
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_54: "Ensure S3 bucket has block public policy enabled"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket_public_access_block.assets
+	File: /modules/s3_cf/main.tf:29-35
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_55: "Ensure S3 bucket has ignore public ACLs enabled"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket_public_access_block.assets
+	File: /modules/s3_cf/main.tf:29-35
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_56: "Ensure S3 bucket has 'restrict_public_buckets' enabled"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket_public_access_block.assets
+	File: /modules/s3_cf/main.tf:29-35
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_93: "Ensure S3 bucket policy does not lockout all but root user. (Prevent lockouts needing root account fixes)"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket_policy.assets
+	File: /modules/s3_cf/main.tf:63-66
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_216: "Ensure CloudFront distribution is enabled"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_34: "Ensure CloudFront distribution ViewerProtocolPolicy is set to HTTPS"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_174: "Verify CloudFront Distribution Viewer Certificate is using TLS v1.2 or higher"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_305: "Ensure CloudFront distribution has a default root object configured"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_358: "Ensure AWS GitHub Actions OIDC authorization policies only allow safe claims and claim order"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_108: "Ensure IAM policies does not allow data exfiltration"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_49: "Ensure no IAM policies documents allow "*" as a statement's actions"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_107: "Ensure IAM policies does not allow credentials exposure"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_109: "Ensure IAM policies does not allow permissions management / resource exposure without constraints"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_283: "Ensure no IAM policies documents allow ALL or any AWS principal permissions to the resource"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_1: "Ensure IAM policies that allow full "*-*" administrative privileges are not created"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_110: "Ensure IAM policies does not allow privilege escalation"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+	Calling File: /main.tf:76-86
+Check: CKV_AWS_41: "Ensure no hard coded AWS access key and secret key exists in provider"
+	PASSED for resource: aws.default
+	File: /providers.tf:1-4
+Check: CKV2_AWS_42: "Ensure AWS CloudFront distribution uses custom SSL certificate"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+Check: CKV2_AWS_44: "Ensure AWS route table with VPC peering does not contain routes overly permissive to all traffic"
+	PASSED for resource: module.network.aws_route_table.public
+	File: /modules/network/main.tf:64-75
+Check: CKV2_AWS_44: "Ensure AWS route table with VPC peering does not contain routes overly permissive to all traffic"
+	PASSED for resource: module.network.aws_route_table.private
+	File: /modules/network/main.tf:83-94
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to another resource"
+	PASSED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to another resource"
+	PASSED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role.cluster
+	File: /modules/eks/main.tf:1-18
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.cluster
+	File: /modules/eks/main.tf:20-23
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.vpc_controller
+	File: /modules/eks/main.tf:25-28
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role.node_group
+	File: /modules/eks/main.tf:60-75
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_amazon_eks_worker
+	File: /modules/eks/main.tf:77-80
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_cni
+	File: /modules/eks/main.tf:82-85
+Check: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: module.eks.aws_iam_role_policy_attachment.node_ecr
+	File: /modules/eks/main.tf:87-90
+Check: CKV2_AWS_35: "AWS NAT Gateways should be utilized for the default route"
+	PASSED for resource: module.network.aws_route_table.public
+	File: /modules/network/main.tf:64-75
+Check: CKV2_AWS_35: "AWS NAT Gateways should be utilized for the default route"
+	PASSED for resource: module.network.aws_route_table.private
+	File: /modules/network/main.tf:83-94
+Check: CKV_AWS_20: "S3 Bucket has an ACL defined which allows public READ access."
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+Check: CKV2_AWS_19: "Ensure that all EIP addresses allocated to a VPC are attached to EC2 instances"
+	PASSED for resource: module.network.aws_eip.nat
+	File: /modules/network/main.tf:47-53
+Check: CKV2_AWS_72: "Ensure AWS CloudFront origin protocol policy enforces HTTPS-only"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+Check: CKV2_AWS_40: "Ensure AWS IAM policy does not allow full IAM privileges"
+	PASSED for resource: module.s3_cf[0].aws_iam_policy_document.bucket
+	File: /modules/s3_cf/main.tf:45-61
+Check: CKV_AWS_57: "S3 Bucket has an ACL defined which allows public WRITE access."
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+Check: CKV2_AWS_50: "Ensure AWS ElastiCache Redis cluster with Multi-AZ Automatic Failover feature set to enabled"
+	PASSED for resource: module.redis.aws_elasticache_replication_group.this
+	File: /modules/redis/main.tf:32-51
+Check: CKV2_AWS_54: "Ensure AWS CloudFront distribution is using secure SSL protocols for HTTPS communication"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	PASSED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+Check: CKV2_AWS_46: "Ensure AWS CloudFront Distribution with S3 have Origin Access set to enabled"
+	PASSED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+Check: CKV_AWS_313: "Ensure RDS cluster configured to copy tags to snapshots"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV_AWS_327: "Ensure RDS Clusters are encrypted using KMS CMKs"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV_AWS_139: "Ensure that RDS clusters have deletion protection enabled"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV_AWS_324: "Ensure that RDS Cluster log capture is enabled"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+	Calling File: /main.tf:40-51
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV_AWS_353: "Ensure that RDS instances have performance insights enabled"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[0]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_226: "Ensure DB instance gets all minor upgrades automatically"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[0]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[0]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_353: "Ensure that RDS instances have performance insights enabled"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[1]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_226: "Ensure DB instance gets all minor upgrades automatically"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[1]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_118: "Ensure that enhanced monitoring is enabled for Amazon RDS instances"
+	FAILED for resource: module.aurora.aws_rds_cluster_instance.this[1]
+	File: /modules/aurora/main.tf:36-45
+	Calling File: /main.tf:40-51
+
+		36 | resource "aws_rds_cluster_instance" "this" {
+		37 |   count               = 2
+		38 |   identifier          = "${var.cluster_identifier}-${count.index}"
+		39 |   cluster_identifier  = aws_rds_cluster.this.id
+		40 |   instance_class      = var.instance_class
+		41 |   engine              = aws_rds_cluster.this.engine
+		42 |   engine_version      = aws_rds_cluster.this.engine_version
+		43 |   publicly_accessible = false
+		44 |   tags                = var.tags
+		45 | }
+
+Check: CKV_AWS_23: "Ensure every security group and rule has a description"
+	FAILED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+
+		30 | resource "aws_security_group" "cluster" {
+		31 |   name        = "${var.cluster_name}-sg"
+		32 |   description = "Cluster communication with worker nodes"
+		33 |   vpc_id      = var.vpc_id
+		34 | 
+		35 |   egress {
+		36 |     from_port   = 0
+		37 |     to_port     = 0
+		38 |     protocol    = "-1"
+		39 |     cidr_blocks = ["0.0.0.0/0"]
+		40 |   }
+		41 | 
+		42 |   tags = merge(var.tags, { Name = "${var.cluster_name}-sg" })
+		43 | }
+
+Check: CKV_AWS_382: "Ensure no security groups allow egress from 0.0.0.0:0 to port -1"
+	FAILED for resource: module.eks.aws_security_group.cluster
+	File: /modules/eks/main.tf:30-43
+	Calling File: /main.tf:28-38
+
+		30 | resource "aws_security_group" "cluster" {
+		31 |   name        = "${var.cluster_name}-sg"
+		32 |   description = "Cluster communication with worker nodes"
+		33 |   vpc_id      = var.vpc_id
+		34 | 
+		35 |   egress {
+		36 |     from_port   = 0
+		37 |     to_port     = 0
+		38 |     protocol    = "-1"
+		39 |     cidr_blocks = ["0.0.0.0/0"]
+		40 |   }
+		41 | 
+		42 |   tags = merge(var.tags, { Name = "${var.cluster_name}-sg" })
+		43 | }
+
+Check: CKV_AWS_39: "Ensure Amazon EKS public endpoint disabled"
+	FAILED for resource: module.eks.aws_eks_cluster.this
+	File: /modules/eks/main.tf:45-58
+	Calling File: /main.tf:28-38
+
+		45 | resource "aws_eks_cluster" "this" {
+		46 |   name     = var.cluster_name
+		47 |   role_arn = aws_iam_role.cluster.arn
+		48 |   version  = var.kubernetes_version
+		49 | 
+		50 |   vpc_config {
+		51 |     subnet_ids         = var.private_subnet_ids
+		52 |     security_group_ids = [aws_security_group.cluster.id]
+		53 |   }
+		54 | 
+		55 |   enabled_cluster_log_types = ["api", "authenticator", "controllerManager", "scheduler"]
+		56 | 
+		57 |   tags = var.tags
+		58 | }
+
+Check: CKV_AWS_58: "Ensure EKS Cluster has Secrets Encryption Enabled"
+	FAILED for resource: module.eks.aws_eks_cluster.this
+	File: /modules/eks/main.tf:45-58
+	Calling File: /main.tf:28-38
+
+		45 | resource "aws_eks_cluster" "this" {
+		46 |   name     = var.cluster_name
+		47 |   role_arn = aws_iam_role.cluster.arn
+		48 |   version  = var.kubernetes_version
+		49 | 
+		50 |   vpc_config {
+		51 |     subnet_ids         = var.private_subnet_ids
+		52 |     security_group_ids = [aws_security_group.cluster.id]
+		53 |   }
+		54 | 
+		55 |   enabled_cluster_log_types = ["api", "authenticator", "controllerManager", "scheduler"]
+		56 | 
+		57 |   tags = var.tags
+		58 | }
+
+Check: CKV_AWS_38: "Ensure Amazon EKS public endpoint not accessible to 0.0.0.0/0"
+	FAILED for resource: module.eks.aws_eks_cluster.this
+	File: /modules/eks/main.tf:45-58
+	Calling File: /main.tf:28-38
+
+		45 | resource "aws_eks_cluster" "this" {
+		46 |   name     = var.cluster_name
+		47 |   role_arn = aws_iam_role.cluster.arn
+		48 |   version  = var.kubernetes_version
+		49 | 
+		50 |   vpc_config {
+		51 |     subnet_ids         = var.private_subnet_ids
+		52 |     security_group_ids = [aws_security_group.cluster.id]
+		53 |   }
+		54 | 
+		55 |   enabled_cluster_log_types = ["api", "authenticator", "controllerManager", "scheduler"]
+		56 | 
+		57 |   tags = var.tags
+		58 | }
+
+Check: CKV_AWS_37: "Ensure Amazon EKS control plane logging is enabled for all log types"
+	FAILED for resource: module.eks.aws_eks_cluster.this
+	File: /modules/eks/main.tf:45-58
+	Calling File: /main.tf:28-38
+
+		45 | resource "aws_eks_cluster" "this" {
+		46 |   name     = var.cluster_name
+		47 |   role_arn = aws_iam_role.cluster.arn
+		48 |   version  = var.kubernetes_version
+		49 | 
+		50 |   vpc_config {
+		51 |     subnet_ids         = var.private_subnet_ids
+		52 |     security_group_ids = [aws_security_group.cluster.id]
+		53 |   }
+		54 | 
+		55 |   enabled_cluster_log_types = ["api", "authenticator", "controllerManager", "scheduler"]
+		56 | 
+		57 |   tags = var.tags
+		58 | }
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS CMK"
+	FAILED for resource: module.kafka.aws_secretsmanager_secret.scram
+	File: /modules/kafka/main.tf:1-4
+	Calling File: /main.tf:64-74
+
+		1 | resource "aws_secretsmanager_secret" "scram" {
+		2 |   name = "/parviz/${var.cluster_name}/kafka-scram"
+		3 |   tags = var.tags
+		4 | }
+
+Check: CKV_AWS_338: "Ensure CloudWatch log groups retains logs for at least 1 year"
+	FAILED for resource: module.kafka.aws_cloudwatch_log_group.msk
+	File: /modules/kafka/main.tf:11-15
+	Calling File: /main.tf:64-74
+
+		11 | resource "aws_cloudwatch_log_group" "msk" {
+		12 |   name              = "/aws/msk/${var.cluster_name}"
+		13 |   retention_in_days = 30
+		14 |   tags              = var.tags
+		15 | }
+
+Check: CKV_AWS_158: "Ensure that CloudWatch Log Group is encrypted by KMS"
+	FAILED for resource: module.kafka.aws_cloudwatch_log_group.msk
+	File: /modules/kafka/main.tf:11-15
+	Calling File: /main.tf:64-74
+
+		11 | resource "aws_cloudwatch_log_group" "msk" {
+		12 |   name              = "/aws/msk/${var.cluster_name}"
+		13 |   retention_in_days = 30
+		14 |   tags              = var.tags
+		15 | }
+
+Check: CKV_AWS_81: "Ensure MSK Cluster encryption in rest and transit is enabled"
+	FAILED for resource: module.kafka.aws_msk_cluster.this
+	File: /modules/kafka/main.tf:17-51
+	Calling File: /main.tf:64-74
+
+		17 | resource "aws_msk_cluster" "this" {
+		18 |   cluster_name           = var.cluster_name
+		19 |   kafka_version          = var.kafka_version
+		20 |   number_of_broker_nodes = var.broker_nodes
+		21 | 
+		22 |   broker_node_group_info {
+		23 |     instance_type   = var.broker_instance_type
+		24 |     client_subnets  = var.subnet_ids
+		25 |     security_groups = var.security_group_ids
+		26 |   }
+		27 | 
+		28 |   encryption_info {
+		29 |     encryption_in_transit {
+		30 |       client_broker = "TLS_PLAINTEXT"
+		31 |       in_cluster    = true
+		32 |     }
+		33 |   }
+		34 | 
+		35 |   client_authentication {
+		36 |     sasl {
+		37 |       scram = true
+		38 |     }
+		39 |   }
+		40 | 
+		41 |   logging_info {
+		42 |     broker_logs {
+		43 |       cloudwatch_logs {
+		44 |         enabled   = true
+		45 |         log_group = aws_cloudwatch_log_group.msk.name
+		46 |       }
+		47 |     }
+		48 |   }
+		49 | 
+		50 |   tags = var.tags
+		51 | }
+
+Check: CKV_AWS_130: "Ensure VPC subnets do not assign public IP by default"
+	FAILED for resource: module.network.aws_subnet.public
+	File: /modules/network/main.tf:19-30
+	Calling File: /main.tf:14-20
+
+		19 | resource "aws_subnet" "public" {
+		20 |   for_each                = { for idx, cidr in var.public_subnet_cidrs : idx => cidr }
+		21 |   vpc_id                  = aws_vpc.this.id
+		22 |   cidr_block              = each.value
+		23 |   map_public_ip_on_launch = true
+		24 |   availability_zone       = element(data.aws_availability_zones.available.names, tonumber(each.key) % length(data.aws_availability_zones.available.names))
+		25 | 
+		26 |   tags = merge(var.tags, {
+		27 |     Name = "${var.tags["env"]}-public-${each.key}"
+		28 |     Tier = "public"
+		29 |   })
+		30 | }
+
+Check: CKV_AWS_23: "Ensure every security group and rule has a description"
+	FAILED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+
+		7  | resource "aws_security_group" "redis" {
+		8  |   name        = "redis-${var.tags["env"]}"
+		9  |   description = "Redis access"
+		10 |   vpc_id      = var.vpc_id
+		11 | 
+		12 |   egress {
+		13 |     from_port   = 0
+		14 |     to_port     = 0
+		15 |     protocol    = "-1"
+		16 |     cidr_blocks = ["0.0.0.0/0"]
+		17 |   }
+		18 | 
+		19 |   tags = var.tags
+		20 | }
+
+Check: CKV_AWS_382: "Ensure no security groups allow egress from 0.0.0.0:0 to port -1"
+	FAILED for resource: module.redis.aws_security_group.redis
+	File: /modules/redis/main.tf:7-20
+	Calling File: /main.tf:53-62
+
+		7  | resource "aws_security_group" "redis" {
+		8  |   name        = "redis-${var.tags["env"]}"
+		9  |   description = "Redis access"
+		10 |   vpc_id      = var.vpc_id
+		11 | 
+		12 |   egress {
+		13 |     from_port   = 0
+		14 |     to_port     = 0
+		15 |     protocol    = "-1"
+		16 |     cidr_blocks = ["0.0.0.0/0"]
+		17 |   }
+		18 | 
+		19 |   tags = var.tags
+		20 | }
+
+Check: CKV_AWS_23: "Ensure every security group and rule has a description"
+	FAILED for resource: module.redis.aws_security_group_rule.ingress_from_workers["${aws_security_group.cluster.id}"]
+	File: /modules/redis/main.tf:22-30
+	Calling File: /main.tf:53-62
+
+		22 | resource "aws_security_group_rule" "ingress_from_workers" {
+		23 |   for_each                 = toset(var.allowed_security_groups)
+		24 |   security_group_id        = aws_security_group.redis.id
+		25 |   type                     = "ingress"
+		26 |   from_port                = 6379
+		27 |   to_port                  = 6379
+		28 |   protocol                 = "tcp"
+		29 |   source_security_group_id = each.value
+		30 | }
+
+Check: CKV_AWS_191: "Ensure ElastiCache replication group is encrypted by KMS using a customer managed Key (CMK)"
+	FAILED for resource: module.redis.aws_elasticache_replication_group.this
+	File: /modules/redis/main.tf:32-51
+	Calling File: /main.tf:53-62
+
+		32 | resource "aws_elasticache_replication_group" "this" {
+		33 |   replication_group_id        = "redis-${var.tags["env"]}"
+		34 |   description                 = "Redis cache for pricing/configuration"
+		35 |   node_type                   = var.node_type
+		36 |   engine                      = "redis"
+		37 |   engine_version              = var.engine_version
+		38 |   automatic_failover_enabled  = true
+		39 |   multi_az_enabled            = true
+		40 |   preferred_cache_cluster_azs = []
+		41 |   num_node_groups             = 1
+		42 |   replicas_per_node_group     = 1
+		43 |   apply_immediately           = true
+		44 |   auth_token                  = var.auth_token
+		45 |   transit_encryption_enabled  = true
+		46 |   at_rest_encryption_enabled  = true
+		47 |   security_group_ids          = [aws_security_group.redis.id]
+		48 |   subnet_group_name           = aws_elasticache_subnet_group.this.name
+		49 | 
+		50 |   tags = var.tags
+		51 | }
+
+Check: CKV_AWS_86: "Ensure CloudFront distribution has Access Logging enabled"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_310: "Ensure CloudFront distributions should have origin failover configured"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_374: "Ensure AWS CloudFront web distribution has geo restriction enabled"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+	Calling File: /main.tf:76-86
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS CMK"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.aurora
+	File: /modules/secrets/main.tf:21-24
+	Calling File: /main.tf:22-26
+
+		21 | resource "aws_secretsmanager_secret" "aurora" {
+		22 |   name = "/parviz/${var.env}/aurora"
+		23 |   tags = var.tags
+		24 | }
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS CMK"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.redis
+	File: /modules/secrets/main.tf:31-34
+	Calling File: /main.tf:22-26
+
+		31 | resource "aws_secretsmanager_secret" "redis" {
+		32 |   name = "/parviz/${var.env}/redis"
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS CMK"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.kafka
+	File: /modules/secrets/main.tf:41-44
+	Calling File: /main.tf:22-26
+
+		41 | resource "aws_secretsmanager_secret" "kafka" {
+		42 |   name = "/parviz/${var.env}/kafka"
+		43 |   tags = var.tags
+		44 | }
+
+Check: CKV_AWS_149: "Ensure that Secrets Manager secret is encrypted using KMS CMK"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.graphql
+	File: /modules/secrets/main.tf:51-54
+	Calling File: /main.tf:22-26
+
+		51 | resource "aws_secretsmanager_secret" "graphql" {
+		52 |   name = "/parviz/${var.env}/graphql-shared-secret"
+		53 |   tags = var.tags
+		54 | }
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: module.network.aws_vpc.this
+	File: /modules/network/main.tf:1-9
+
+		1 | resource "aws_vpc" "this" {
+		2 |   cidr_block           = var.vpc_cidr
+		3 |   enable_dns_support   = true
+		4 |   enable_dns_hostnames = true
+		5 | 
+		6 |   tags = merge(var.tags, {
+		7 |     Name = "${var.tags["env"]}-parviz-vpc"
+		8 |   })
+		9 | }
+
+Check: CKV2_AWS_32: "Ensure CloudFront distribution has a response headers policy attached"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV2_AWS_62: "Ensure S3 buckets should have event notifications enabled"
+	FAILED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+
+		8  | resource "aws_s3_bucket" "assets" {
+		9  |   bucket = var.bucket_name
+		10 |   acl    = "private"
+		11 | 
+		12 |   force_destroy = false
+		13 | 
+		14 |   versioning {
+		15 |     enabled = true
+		16 |   }
+		17 | 
+		18 |   server_side_encryption_configuration {
+		19 |     rule {
+		20 |       apply_server_side_encryption_by_default {
+		21 |         sse_algorithm = "AES256"
+		22 |       }
+		23 |     }
+		24 |   }
+		25 | 
+		26 |   tags = var.tags
+		27 | }
+
+Check: CKV2_AWS_47: "Ensure AWS CloudFront attached WAFv2 WebACL is configured with AMR for Log4j Vulnerability"
+	FAILED for resource: module.s3_cf[0].aws_cloudfront_distribution.this
+	File: /modules/s3_cf/main.tf:122-197
+
+		Code lines for this resource are too many. Please use IDE of your choice to review the file.
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: module.network.aws_vpc.this
+	File: /modules/network/main.tf:1-9
+
+		1 | resource "aws_vpc" "this" {
+		2 |   cidr_block           = var.vpc_cidr
+		3 |   enable_dns_support   = true
+		4 |   enable_dns_hostnames = true
+		5 | 
+		6 |   tags = merge(var.tags, {
+		7 |     Name = "${var.tags["env"]}-parviz-vpc"
+		8 |   })
+		9 | }
+
+Check: CKV2_AWS_27: "Ensure Postgres RDS as aws_rds_cluster has Query Logging enabled"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV2_AWS_8: "Ensure that RDS clusters has backup plan of AWS Backup"
+	FAILED for resource: module.aurora.aws_rds_cluster.this
+	File: /modules/aurora/main.tf:16-34
+
+		16 | resource "aws_rds_cluster" "this" {
+		17 |   cluster_identifier                  = var.cluster_identifier
+		18 |   engine                              = "aurora-postgresql"
+		19 |   engine_version                      = var.engine_version
+		20 |   master_username                     = var.master_username
+		21 |   master_password                     = var.master_password
+		22 |   db_subnet_group_name                = aws_db_subnet_group.this.name
+		23 |   vpc_security_group_ids              = var.security_group_ids
+		24 |   iam_database_authentication_enabled = true
+		25 |   storage_encrypted                   = true
+		26 |   enable_http_endpoint                = true
+		27 | 
+		28 |   serverlessv2_scaling_configuration {
+		29 |     max_capacity = 4
+		30 |     min_capacity = 0.5
+		31 |   }
+		32 | 
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV2_AWS_57: "Ensure Secrets Manager secrets should have automatic rotation enabled"
+	FAILED for resource: module.kafka.aws_secretsmanager_secret.scram
+	File: /modules/kafka/main.tf:1-4
+
+		1 | resource "aws_secretsmanager_secret" "scram" {
+		2 |   name = "/parviz/${var.cluster_name}/kafka-scram"
+		3 |   tags = var.tags
+		4 | }
+
+Check: CKV2_AWS_57: "Ensure Secrets Manager secrets should have automatic rotation enabled"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.aurora
+	File: /modules/secrets/main.tf:21-24
+
+		21 | resource "aws_secretsmanager_secret" "aurora" {
+		22 |   name = "/parviz/${var.env}/aurora"
+		23 |   tags = var.tags
+		24 | }
+
+Check: CKV2_AWS_57: "Ensure Secrets Manager secrets should have automatic rotation enabled"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.redis
+	File: /modules/secrets/main.tf:31-34
+
+		31 | resource "aws_secretsmanager_secret" "redis" {
+		32 |   name = "/parviz/${var.env}/redis"
+		33 |   tags = var.tags
+		34 | }
+
+Check: CKV2_AWS_57: "Ensure Secrets Manager secrets should have automatic rotation enabled"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.kafka
+	File: /modules/secrets/main.tf:41-44
+
+		41 | resource "aws_secretsmanager_secret" "kafka" {
+		42 |   name = "/parviz/${var.env}/kafka"
+		43 |   tags = var.tags
+		44 | }
+
+Check: CKV2_AWS_57: "Ensure Secrets Manager secrets should have automatic rotation enabled"
+	FAILED for resource: module.secrets.aws_secretsmanager_secret.graphql
+	File: /modules/secrets/main.tf:51-54
+
+		51 | resource "aws_secretsmanager_secret" "graphql" {
+		52 |   name = "/parviz/${var.env}/graphql-shared-secret"
+		53 |   tags = var.tags
+		54 | }
+
+Check: CKV2_AWS_61: "Ensure that an S3 bucket has a lifecycle configuration"
+	FAILED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+
+		8  | resource "aws_s3_bucket" "assets" {
+		9  |   bucket = var.bucket_name
+		10 |   acl    = "private"
+		11 | 
+		12 |   force_destroy = false
+		13 | 
+		14 |   versioning {
+		15 |     enabled = true
+		16 |   }
+		17 | 
+		18 |   server_side_encryption_configuration {
+		19 |     rule {
+		20 |       apply_server_side_encryption_by_default {
+		21 |         sse_algorithm = "AES256"
+		22 |       }
+		23 |     }
+		24 |   }
+		25 | 
+		26 |   tags = var.tags
+		27 | }
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+
+		8  | resource "aws_s3_bucket" "assets" {
+		9  |   bucket = var.bucket_name
+		10 |   acl    = "private"
+		11 | 
+		12 |   force_destroy = false
+		13 | 
+		14 |   versioning {
+		15 |     enabled = true
+		16 |   }
+		17 | 
+		18 |   server_side_encryption_configuration {
+		19 |     rule {
+		20 |       apply_server_side_encryption_by_default {
+		21 |         sse_algorithm = "AES256"
+		22 |       }
+		23 |     }
+		24 |   }
+		25 | 
+		26 |   tags = var.tags
+		27 | }
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+	FAILED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+
+		8  | resource "aws_s3_bucket" "assets" {
+		9  |   bucket = var.bucket_name
+		10 |   acl    = "private"
+		11 | 
+		12 |   force_destroy = false
+		13 | 
+		14 |   versioning {
+		15 |     enabled = true
+		16 |   }
+		17 | 
+		18 |   server_side_encryption_configuration {
+		19 |     rule {
+		20 |       apply_server_side_encryption_by_default {
+		21 |         sse_algorithm = "AES256"
+		22 |       }
+		23 |     }
+		24 |   }
+		25 | 
+		26 |   tags = var.tags
+		27 | }
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+	FAILED for resource: module.s3_cf[0].aws_s3_bucket.assets
+	File: /modules/s3_cf/main.tf:8-27
+
+		8  | resource "aws_s3_bucket" "assets" {
+		9  |   bucket = var.bucket_name
+		10 |   acl    = "private"
+		11 | 
+		12 |   force_destroy = false
+		13 | 
+		14 |   versioning {
+		15 |     enabled = true
+		16 |   }
+		17 | 
+		18 |   server_side_encryption_configuration {
+		19 |     rule {
+		20 |       apply_server_side_encryption_by_default {
+		21 |         sse_algorithm = "AES256"
+		22 |       }
+		23 |     }
+		24 |   }
+		25 | 
+		26 |   tags = var.tags
+		27 | }
+
+
+
+Wrote output in SARIF format to the file 'results.sarif'

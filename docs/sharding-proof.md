@@ -1,0 +1,1 @@
+- Primary: shard = fnv1a64(tenant_id) mod k. O(1) read. Resharding via consistent ring moves O(N/k).

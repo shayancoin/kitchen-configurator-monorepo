@@ -1,0 +1,1 @@
+- Zipf α≈1.1; top-K persisted. Hit ≈ H_K(α)/H_N(α). For K=500,N=5000,α=1.1 → ≈0.93. Target ≥0.90.

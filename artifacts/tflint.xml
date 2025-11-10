@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite tests="2" failures="2" time="0" name="">
+    <properties></properties>
+    <testcase classname="providers.tf" name="terraform_unused_declarations" time="0">
+      <failure message="providers.tf:6,1-37: data &#34;aws_caller_identity&#34; &#34;current&#34; is declared but not used" type="Warning">Warning: data &#34;aws_caller_identity&#34; &#34;current&#34; is declared but not used&#xA;Rule: terraform_unused_declarations&#xA;Range: providers.tf:6,1-37</failure>
+    </testcase>
+    <testcase classname="providers.tf" name="terraform_unused_declarations" time="0">
+      <failure message="providers.tf:7,1-28: data &#34;aws_region&#34; &#34;current&#34; is declared but not used" type="Warning">Warning: data &#34;aws_region&#34; &#34;current&#34; is declared but not used&#xA;Rule: terraform_unused_declarations&#xA;Range: providers.tf:7,1-28</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
