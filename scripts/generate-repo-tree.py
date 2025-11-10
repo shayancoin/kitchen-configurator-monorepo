@@ -60,12 +60,13 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
             return
         
         try:
-            items = sorted(path.iterdir(), key=lambda x: (not x.is_dir(), x.name))
+            all_items = list(path.iterdir())
         except PermissionError:
             return
         
-        # Filter out ignored items
-        items = [item for item in items if not should_ignore(item.name)]
+        # Filter out ignored items before sorting
+        filtered = [item for item in all_items if not should_ignore(item.name)]
+        items = sorted(filtered, key=lambda x: (not x.is_dir(), x.name))
         
         for item in items:
             if item.is_dir():
