@@ -78,7 +78,7 @@ def generate_tree(root_path: Path, max_depth: int = 2) -> list[str]:
     walk_dir(root_path)
     return lines
 
-def main():
+def main() -> None:
     """
     Generate a Markdown-formatted repository tree up to depth 2 and print it to stdout.
     
