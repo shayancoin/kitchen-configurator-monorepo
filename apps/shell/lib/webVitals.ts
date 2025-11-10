@@ -103,7 +103,16 @@ export const onTTI = (handler: VitalCallback): Unsubscribe => {
 
   let resolved = false;
   let observer: PerformanceObserver | null = null;
-  let lastLongTaskEnd = now();
+  // Initialize lastLongTaskEnd to navigation origin (not current time) so buffered
+  // long-task entries from before now() are included in TTI calculation.
+  // Use performance.timeOrigin if available, fallback to performance.timing.navigationStart.
+  const navigationOrigin =
+    typeof performance !== "undefined"
+      ? (typeof performance.timeOrigin === "number"
+          ? performance.timeOrigin
+          : performance.timing?.navigationStart ?? 0)
+      : 0;
+  let lastLongTaskEnd = navigationOrigin;
   let idleTimer: ReturnType<typeof window.setTimeout> | null = null;
 
   const cleanup = () => {

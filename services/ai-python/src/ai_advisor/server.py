@@ -56,18 +56,18 @@ def _build_pipeline() -> RAGPipeline:
     """
     Constructs and returns a configured RAGPipeline based on current application settings.
     
-    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist after component construction (post-store, pre-pipeline) and after pipeline construction for injecting custom logic or tracing.
+    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist before embedder construction (allows full strategy selection) and after pipeline construction (for post-processing/tracing).
     
     Returns:
         RAGPipeline: A pipeline configured with the application's vector store, embedder, LLM, default_k, and generator_label.
     """
     settings = get_settings()
+    # EXTEND_AI_HERE: pre-embedder hook (mutate settings, select custom embedder/vector-store strategy).
     embedder = _build_embedder(settings)
     dim = _infer_dim(embedder, settings.embed_dim)
     store = build_store(dsn=settings.vector_dsn, table=settings.vector_table, dim=dim)
     llm = _build_llm(settings)
     label = "echo" if isinstance(llm, EchoLLM) else "openai"
-    # // EXTEND_AI_HERE: pre-reranker hook (mutate embeddings/vector-store strategy).
     pipeline = RAGPipeline(
         vector_store=store,
         embedder=embedder,
@@ -75,7 +75,7 @@ def _build_pipeline() -> RAGPipeline:
         default_k=settings.top_k,
         generator_label=label,
     )
-    # // EXTEND_AI_HERE: post-reranker hook (stream rerank traces to downstream AI features).
+    # EXTEND_AI_HERE: post-pipeline hook (stream rerank traces, inject custom rerankers, downstream AI features).
     return pipeline
 
 
@@ -107,7 +107,7 @@ def _build_llm(settings: Settings) -> LanguageModel:
     if settings.openai_api_key:
         llm = ChatOpenAI(temperature=0.2, api_key=settings.openai_api_key, model_name="gpt-4o-mini")
         return LangChainLLMAdapter(llm)
-    # EXTEND_AI_HERE: drop in CSP/CP-SAT backed reasoning once deterministic seeds land.
+    # EXTEND_AI_HERE: drop in CSP/CP-SAT backed reasoning once deterministic seeds land (Phase 7).
     return EchoLLM()
 
 
