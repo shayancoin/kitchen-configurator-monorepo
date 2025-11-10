@@ -23,7 +23,7 @@ def should_ignore(name: str) -> bool:
     Determine whether a filesystem name should be ignored by the tree generator.
     
     Returns:
-        `true` if the name is listed in IGNORE_DIRS, listed in IGNORE_FILES, or starts with a dot, `false` otherwise.
+        `True` if the name is listed in IGNORE_DIRS, listed in IGNORE_FILES, or starts with a dot, `False` otherwise.
     """
     return name in IGNORE_DIRS or name in IGNORE_FILES or name.startswith('.')
 
