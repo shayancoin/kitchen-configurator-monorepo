@@ -120,7 +120,7 @@ export const onTTI = (handler: VitalCallback): Unsubscribe => {
       return;
     }
 
-    const value = Math.max(lastLongTaskEnd, now());
+    const value = lastLongTaskEnd;
     emitSpan("TTI", value);
     handler(value);
     cleanup();

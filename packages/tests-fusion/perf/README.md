@@ -23,7 +23,7 @@ This harness measures the kitchen configurator's user-centric budgets and stores
      --out json=artifacts/perf/k6-${ts}.json
    ```
    Keep only the last three JSON runs per artifacts rotation (older files may be pruned by CI before upload).
-3. Parse the emitted `window.tesla.metrics` payload from the browser console (or via the `tesla:perf-update` event) and store summaries under `artifacts/perf/tti-budget.json` whenever TTI or LCP exceeds their budgets. These events now include a perf-budget flag for downstream automation.
+3. Parse the emitted `window.tesla.metrics` payload from the browser console (or via the `tesla:perf-update` event) and store summaries under `artifacts/perf/tti-budget.json` whenever TTI or LCP exceeds their budgets. The perf budget state is available via `window.tesla.perfBudget` (not in the `tesla:perf-update` event detail) for downstream automation.
 
 ## Desktop profile
 - Emulate 6× CPU slowdown and 150 ms RTT in DevTools.

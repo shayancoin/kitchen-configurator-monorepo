@@ -9,7 +9,7 @@ docker run --rm -t \
   -v "${ROOT_DIR}":/work \
   -w /work \
   -e GOMAXPROCS="${CPUS}" \
-  golang:1.22.2 \
+  golang:1.23.0 \
   bash -lc '
 set -euo pipefail
 apt-get update >/dev/null

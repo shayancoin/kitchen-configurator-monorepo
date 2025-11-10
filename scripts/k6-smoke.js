@@ -20,26 +20,14 @@ export const options = {
 
 const graphqlPayload = JSON.stringify({
   query: `
-    query ConfiguratorPrefetch($locale: String!) {
-      configurator(locale: $locale) {
+    query ConfiguratorPrefetch {
+      catalogModules {
         id
-        priceSummary {
-          subtotal
-          promotions
-          total
-        }
-        hero {
-          headline
-          subhead
-        }
-      }
-      viewer(locale: $locale) {
-        layers
-        lastPublishedAt
+        name
+        description
       }
     }
-  `,
-  variables: { locale }
+  `
 });
 
 const headers = {
@@ -66,7 +54,8 @@ export default function smoke() {
   graphQLDuration.add(graphqlResponse.timings.duration);
   check(graphqlResponse, {
     "graphql status 200": (res) => res.status === 200,
-    "graphql body": (res) => Boolean(res.json()?.data)
+    "graphql body": (res) => Boolean(res.json()?.data),
+    "graphql no errors": (res) => !res.json()?.errors || res.json().errors.length === 0
   });
 
   sleep(Number(__ENV.K6_SLEEP ?? 1));
