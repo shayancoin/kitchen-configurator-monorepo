@@ -45,7 +45,9 @@ resource "aws_elasticache_replication_group" "this" {
   preferred_cache_cluster_azs = []
   num_node_groups             = 1
   replicas_per_node_group     = 1
-  apply_immediately           = true
+  num_node_groups             = 1
+  replicas_per_node_group     = 1
+  auth_token                  = var.auth_token
   auth_token                  = var.auth_token
   transit_encryption_enabled  = true
   at_rest_encryption_enabled  = true
