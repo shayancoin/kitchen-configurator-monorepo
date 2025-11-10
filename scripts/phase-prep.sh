@@ -15,13 +15,13 @@ if ! git rev-parse --verify "$BASE" >/dev/null 2>&1; then
 fi
 DRY_RUN="false"
 
+ DRY_RUN="false"
+ 
  for arg in "$@"; do
-
-for arg in "$@"; do
-  if [[ "$arg" == "--dry-run" ]]; then
-    DRY_RUN="true"
-  fi
-done
+   if [[ "$arg" == "--dry-run" ]]; then
+     DRY_RUN="true"
+   fi
+ done
 
 PHASES=(
   "feature/phase-1-mvp"
