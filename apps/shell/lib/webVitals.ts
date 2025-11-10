@@ -171,7 +171,7 @@ export const onTTI = (handler: VitalCallback): Unsubscribe => {
     observer.observe({ type: "longtask", buffered: true });
   } catch {
     // Fallback: report immediately if longtask buffering is unavailable.
-    const fallbackValue = now();
+    const fallbackValue = 0; // Assume interactive if no task data available
     emitSpan("TTI", fallbackValue);
     handler(fallbackValue);
     return noop;
