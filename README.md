@@ -78,9 +78,9 @@ when Module Federation is disabled, so we can keep builds deterministic.
 
 ## Step 13 – Optimization Pass Highlights
 - **Tesla design system parity**: `@repo/ui-tesla` now bundles the Universal Sans font stack + raw Tesla Design System (TDS) tokens derived from `/Users/shayanbozorgmanesh/Developer/tesla/CSS/main.*.css`. Tokens cover typography, color ramps, spacing, and elevation shadows; `TeslaThemeProvider` publishes them on `window.tesla.tokens` alongside component contracts for Header, Section, and ConfiguratorPanel primitives.
-- **Global perf contract**: `window.tesla.metrics` captures LCP/FID/TTI in real time. Shell initializes `initPerfBudget()` → `PerfBudgetIndicator`, proving TTI ≤ 2000 ms locally (see `apps/shell/components/PerfBudgetIndicator.tsx`). Metrics stream through a custom `tesla:perf-update` event so remotes can join the SLO conversation.
-- **Configurator code-splitting**: `apps/web/app/[locale]/configurator` lazy-loads the Tesla preview shell, trimming 34% from the initial JS payload for locales that do not need the configurator hero during SSR while keeping the CSS + tokens scoped to that chunk.
-- **Go test reliability**: `scripts/full-validation.sh` now shells Go unit tests through `golang:1.22.2` when running on macOS, sidestepping the `LC_UUID` dyld issue while still honoring the local toolchain on Linux builders.
+- **Global perf contract**: `window.tesla.metrics` captures LCP/FID/TTI in real time. Shell initializes `initPerfBudget()` → `PerfBudgetIndicator`, targeting TTI ≤ 2000 ms (see `apps/shell/components/PerfBudgetIndicator.tsx`). Metrics stream through a custom `tesla:perf-update` event so remotes can join the SLO conversation.
+- **Configurator code-splitting**: `apps/web/app/[locale]/configurator` lazy-loads the Tesla preview shell, targeting a reduced initial JS payload for locales that do not need the configurator hero during SSR while keeping the CSS + tokens scoped to that chunk.
+- **Go test reliability**: `scripts/full-validation.sh` now shells Go unit tests through `golang:1.23.0` when running on macOS, sidestepping the `LC_UUID` dyld issue while still honoring the local toolchain on Linux builders.
 
 ## Step 14 – Phase Prep & Hooks
 - `docs/phase-plan.md` tracks the phase-by-phase DAG (Phases 1–7) and the corresponding `feature/phase-*` branches created via `scripts/phase-prep.sh`.
