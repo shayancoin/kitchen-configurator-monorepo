@@ -66,10 +66,17 @@ const ShellPage = () => {
   useEffect(() => {
     initPerfBudget();
 
+    let disposed = false;
     let cleanup: (() => void) | undefined;
+    let idleHandle: number | undefined;
+    let timeoutHandle: number | undefined;
     const loadWebVitals = () =>
       import("@/lib/webVitals")
         .then(({ bootShellWebVitals }) => {
+          if (disposed) {
+            return;
+          }
+
           cleanup = bootShellWebVitals();
         })
         .catch((error) => {
@@ -77,12 +84,21 @@ const ShellPage = () => {
         });
 
     if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(loadWebVitals);
+      idleHandle = window.requestIdleCallback(loadWebVitals);
     } else {
-      window.setTimeout(loadWebVitals, 0);
+      timeoutHandle = window.setTimeout(loadWebVitals, 0);
     }
 
-    return () => cleanup?.();
+    return () => {
+      disposed = true;
+      cleanup?.();
+      if (idleHandle !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle !== undefined) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
   }, []);
 
   return (
