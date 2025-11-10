@@ -91,6 +91,8 @@ jobs:
 
   shell_bundle:
     name: Shell bundle stats
+    permissions:
+      contents: read
     needs: node
     runs-on: ubuntu-latest
     steps:
