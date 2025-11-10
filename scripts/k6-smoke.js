@@ -57,10 +57,11 @@ export default function smoke() {
   });
 
   graphQLDuration.add(graphqlResponse.timings.duration);
+  const gqlBody = graphqlResponse.json();
   check(graphqlResponse, {
     "graphql status 200": (res) => res.status === 200,
-    "graphql body": (res) => Boolean(res.json()?.data),
-    "graphql no errors": (res) => !res.json()?.errors || res.json().errors.length === 0
+    "graphql body": () => Boolean(gqlBody?.data),
+    "graphql no errors": () => !gqlBody?.errors || gqlBody.errors.length === 0
   });
 
   sleep(Number(__ENV.K6_SLEEP ?? 1));
