@@ -53,10 +53,25 @@ export const onFID = (handler: VitalCallback): Unsubscribe => {
 
 const IDLE_WINDOW_MS = 5_000;
 
-const now =
-  typeof performance !== "undefined" && performance.now
-    ? () => performance.now()
-    : () => Date.now();
+const now = () => {
+  const perf =
+    typeof performance !== "undefined" ? performance : undefined;
+
+  if (typeof perf?.now === "function") {
+    return perf.now();
+  }
+
+  const timeOrigin =
+    typeof perf?.timeOrigin === "number"
+      ? perf.timeOrigin
+      : perf?.timing?.navigationStart;
+
+  if (typeof timeOrigin === "number") {
+    return Date.now() - timeOrigin;
+  }
+
+  return 0;
+};
 
 const runWhenLoaded = (fn: () => void) => {
   if (!hasWindow()) {
