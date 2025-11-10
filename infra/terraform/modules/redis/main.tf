@@ -44,6 +44,8 @@ resource "aws_elasticache_replication_group" "this" {
   auth_token                  = var.auth_token
   transit_encryption_enabled  = true
   at_rest_encryption_enabled  = true
+  kms_key_id                  = var.kms_key_arn
+  auto_minor_version_upgrade  = true
   security_group_ids          = [aws_security_group.redis.id]
   subnet_group_name           = aws_elasticache_subnet_group.this.name
 

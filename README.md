@@ -90,7 +90,8 @@ when Module Federation is disabled, so we can keep builds deterministic.
 - `// EXTEND_AI_HERE` beacons live in the local configurator panel, AI advisor server, and viewer2d WebGPU TODO to keep CPSAT/RAG/visual extensions discoverable.
 
 ## PR-001 – IaC Baseline
+
 - `infra/terraform` now houses composable modules for the network, EKS, Aurora, Redis, MSK, CloudFront/S3, Istio, OTEL, and Secrets Manager hooks. `infra/terraform/README.md` documents `terraform apply` inputs.
-- Aurora exposes an explicit modulo-based shard strategy (murmur3 hash → `customer_id % k`) with serverless v2 scaling, satisfying the “hash modulo k for O(1) reads” directive.
+- Aurora exposes an explicit modulo-based shard strategy (`fnv1a64(configuration_id) % ${var.shard_count}`) with serverless v2 scaling, satisfying the “hash modulo k for O(1) reads” directive.
 - CloudFront behaviors split immutable sprites (S3 origin) from GET-only GraphQL persisted queries, using APQ-friendly cache policies plus SigV4 OAC to lock down the bucket.
 - OTEL Collector (Terraform + `ops/otel/collector.yaml`) now performs latency/error tail sampling and pushes RED metrics to Prometheus remote write while Tempo ingests spans.

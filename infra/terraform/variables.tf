@@ -143,3 +143,15 @@ variable "prometheus_remote_write_endpoint" {
   type        = string
   default     = "https://prometheus.example.com/api/v1/write"
 }
+
+variable "secrets_rotation_lambda_arn" {
+  description = "ARN of the Lambda function responsible for rotating Secrets Manager secrets. Leave null to disable automatic rotation."
+  type        = string
+  default     = null
+}
+
+variable "secrets_rotation_interval_days" {
+  description = "Number of days between automatic secret rotations when a rotation Lambda is configured."
+  type        = number
+  default     = 30
+}

@@ -1,6 +1,7 @@
 resource "aws_secretsmanager_secret" "scram" {
   name = "/parviz/${var.cluster_name}/kafka-scram"
   tags = var.tags
+  kms_key_id = var.secret_kms_key_arn
 }
 
 resource "aws_secretsmanager_secret_version" "scram" {
@@ -12,6 +13,7 @@ resource "aws_cloudwatch_log_group" "msk" {
   name              = "/aws/msk/${var.cluster_name}"
   retention_in_days = 30
   tags              = var.tags
+  kms_key_id        = var.log_kms_key_arn
 }
 
 resource "aws_msk_cluster" "this" {
@@ -26,6 +28,7 @@ resource "aws_msk_cluster" "this" {
   }
 
   encryption_info {
+    encryption_at_rest_kms_key_arn = var.kms_key_arn
     encryption_in_transit {
       client_broker = "TLS_PLAINTEXT"
       in_cluster    = true

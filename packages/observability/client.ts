@@ -5,11 +5,11 @@
  */
 
 import * as Sentry from "@sentry/nextjs";
-import { keys } from "./keys";
+import { keysClient } from "./keys";
 
 export const initializeSentry = (): ReturnType<typeof Sentry.init> =>
   Sentry.init({
-    dsn: keys().NEXT_PUBLIC_SENTRY_DSN,
+    dsn: keysClient().NEXT_PUBLIC_SENTRY_DSN,
 
     // Enable logging
     enableLogs: true,

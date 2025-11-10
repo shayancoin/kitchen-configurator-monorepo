@@ -1,10 +1,10 @@
-import { NodeSDK } from "@opentelemetry/sdk-node";
+import { diag, DiagConsoleLogger, DiagLogLevel } from "@opentelemetry/api";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { NodeSDK } from "@opentelemetry/sdk-node";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import { diag, DiagConsoleLogger, DiagLogLevel } from "@opentelemetry/api";
-import { keys } from "./keys";
+import { keysServer } from "./keys";
 
 let sdk: NodeSDK | null = null;
 
@@ -27,7 +27,7 @@ export const startNodeTelemetry = (): NodeSDK | null => {
     return sdk;
   }
 
-  const env = keys();
+  const env = keysServer();
 
   if (env.OTEL_DEBUG) {
     diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);

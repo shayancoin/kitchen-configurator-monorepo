@@ -39,3 +39,14 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "kms_key_arn" {
+  description = "ARN of the customer managed KMS key used for encrypting the Aurora cluster and instances."
+  type        = string
+}
+
+variable "deletion_protection" {
+  description = "When true, prevents the Aurora cluster from being deleted accidentally."
+  type        = bool
+  default     = true
+}

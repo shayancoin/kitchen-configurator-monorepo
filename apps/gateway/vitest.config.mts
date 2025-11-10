@@ -9,7 +9,10 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.test.ts"],
     coverage: {
-      enabled: false
+      enabled: true,
+      provider: "v8",
+      reporter: ["text", "lcov"],
+      reportsDirectory: "./coverage"
     }
   },
   resolve: {
