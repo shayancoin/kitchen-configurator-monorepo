@@ -65,6 +65,7 @@ jobs:
       - uses: github/codeql-action/upload-sarif@v3
         with: { sarif_file: checkov.sarif }
 
+
   plan:
     if: ${{ secrets.AWS_ROLE_TO_ASSUME != '' && secrets.TF_STATE_BUCKET != '' && secrets.TF_STATE_DDB != '' && secrets.AWS_REGION != '' }}
     needs: [fmt_validate, tflint, tfsec, checkov]

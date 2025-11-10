@@ -20,5 +20,11 @@ export default defineConfig({
       "server-only": path.join(dirname, "./vitest.server-only.stub.ts"),
       "@repo/env/next": path.join(dirname, "./vitest.env-next.stub.ts")
     }
+  },
+  resolve: {
+    alias: {
+      "server-only": path.join(dirname, "./vitest.server-only.stub.ts"),
+      "@repo/env/next": path.join(dirname, "./vitest.env-next.stub.ts")
+    }
   }
 });
