@@ -15,8 +15,6 @@ if ! git rev-parse --verify "$BASE" >/dev/null 2>&1; then
 fi
 DRY_RUN="false"
 
- for arg in "$@"; do
-
 for arg in "$@"; do
   if [[ "$arg" == "--dry-run" ]]; then
     DRY_RUN="true"
