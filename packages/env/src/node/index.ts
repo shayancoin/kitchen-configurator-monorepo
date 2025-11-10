@@ -23,6 +23,15 @@ type CreateEnvOptions<TServer extends ZodShape, TClient extends ZodShape | undef
 const sanitize = (value: unknown): unknown =>
   typeof value === "string" && value.trim() === "" ? undefined : value;
 
+/**
+ * Create a typed environment object by validating and parsing runtime values against provided Zod shapes.
+ *
+ * @param server - Zod shape describing required server-side environment keys and their schemas.
+ * @param client - Optional Zod shape describing client-side environment keys and their schemas.
+ * @param runtimeEnv - Source of runtime environment values (for example `process.env`) to be validated and parsed.
+ * @param emptyStringAsUndefined - If `true`, convert string values that are only whitespace to `undefined` before parsing.
+ * @returns The parsed server environment values merged with parsed client values when a client shape is provided.
+ */
 export function createEnv<TServer extends ZodShape, TClient extends ZodShape | undefined = undefined>({
   server,
   client,
