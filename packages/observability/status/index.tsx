@@ -1,9 +1,10 @@
 import "server-only";
-import { keys } from "../keys";
+import "server-only";
+import { keysServer } from "../keys";
 import type { BetterStackResponse } from "./types";
 
-const apiKey = keys().BETTERSTACK_API_KEY;
-const url = keys().BETTERSTACK_URL;
+const apiKey = keysServer().BETTERSTACK_API_KEY;
+const url = keysServer().BETTERSTACK_URL;
 
 export const Status = async () => {
   if (!(apiKey && url)) {

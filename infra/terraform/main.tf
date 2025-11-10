@@ -11,6 +11,23 @@ locals {
   )
 }
 
+module "kms_data" {
+  source = "./modules/kms"
+
+  alias       = "${var.env}/data-plane"
+  description = "CMK for data plane services (Aurora, Redis, Kafka, Secrets, and logging)."
+
+  service_principals = [
+    "rds.amazonaws.com",
+    "secretsmanager.amazonaws.com",
+    "elasticache.amazonaws.com",
+    "logs.amazonaws.com",
+    "kafka.amazonaws.com"
+  ]
+
+  tags = local.base_tags
+}
+
 module "network" {
   source               = "./modules/network"
   vpc_cidr             = var.vpc_cidr
@@ -21,8 +38,11 @@ module "network" {
 
 module "secrets" {
   source = "./modules/secrets"
-  env    = var.env
-  tags   = local.base_tags
+  env                   = var.env
+  tags                  = local.base_tags
+  kms_key_arn           = module.kms_data.key_arn
+  rotation_lambda_arn   = var.secrets_rotation_lambda_arn
+  rotation_interval_days = var.secrets_rotation_interval_days
 }
 
 module "eks" {
@@ -48,6 +68,8 @@ module "aurora" {
   instance_class     = var.aurora_instance_class
   shard_count        = var.aurora_shard_count
   tags               = local.base_tags
+  kms_key_arn        = module.kms_data.key_arn
+  deletion_protection = true
 }
 
 module "redis" {
@@ -59,6 +81,7 @@ module "redis" {
   engine_version          = var.redis_engine_version
   allowed_security_groups = [module.eks.cluster_security_group_id]
   tags                    = local.base_tags
+  kms_key_arn             = module.kms_data.key_arn
 }
 
 module "kafka" {
@@ -71,6 +94,9 @@ module "kafka" {
   client_username    = module.secrets.kafka_username
   client_password    = module.secrets.kafka_password
   tags               = local.base_tags
+  kms_key_arn        = module.kms_data.key_arn
+  log_kms_key_arn    = module.kms_data.key_arn
+  secret_kms_key_arn = module.kms_data.key_arn
 }
 
 module "s3_cf" {
@@ -97,7 +123,7 @@ data "aws_eks_cluster_auth" "this" {
 provider "kubernetes" {
   alias                  = "eks"
   host                   = data.aws_eks_cluster.this.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+  cluster_ca_certificate = base64decode(one(data.aws_eks_cluster.this.certificate_authority).data)
   token                  = data.aws_eks_cluster_auth.this.token
 }
 
@@ -106,7 +132,7 @@ provider "helm" {
 
   kubernetes {
     host                   = data.aws_eks_cluster.this.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+    cluster_ca_certificate = base64decode(one(data.aws_eks_cluster.this.certificate_authority).data)
     token                  = data.aws_eks_cluster_auth.this.token
   }
 }

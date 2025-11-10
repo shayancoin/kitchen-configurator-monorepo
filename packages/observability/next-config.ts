@@ -1,10 +1,10 @@
 import { withLogtail } from "@logtail/next";
 import { withSentryConfig } from "@sentry/nextjs";
-import { keys } from "./keys";
+import { keysServer } from "./keys";
 
 export const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
-  org: keys().SENTRY_ORG,
-  project: keys().SENTRY_PROJECT,
+  org: keysServer().SENTRY_ORG,
+  project: keysServer().SENTRY_PROJECT,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,

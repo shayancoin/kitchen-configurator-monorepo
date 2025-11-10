@@ -9,7 +9,16 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.test.ts"],
     coverage: {
-      enabled: false
+      enabled: true,
+      provider: "v8",
+      reporter: ["text", "lcov"],
+      reportsDirectory: "./coverage"
+    }
+  },
+  resolve: {
+    alias: {
+      "server-only": path.join(dirname, "./vitest.server-only.stub.ts"),
+      "@repo/env/next": path.join(dirname, "./vitest.env-next.stub.ts")
     }
   },
   resolve: {

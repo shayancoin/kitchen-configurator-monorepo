@@ -19,40 +19,80 @@ const booleanish = z
   }, z.boolean())
   .optional();
 
-export const keys = () =>
+const serverShape = {
+  BETTERSTACK_API_KEY: z.string().optional(),
+  BETTERSTACK_URL: z.string().url().optional(),
+  // Added by Sentry Integration, Vercel Marketplace
+  SENTRY_ORG: z.string().optional(),
+  SENTRY_PROJECT: z.string().optional(),
+  OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
+  OTEL_EXPORTER_OTLP_HEADERS: z.string().optional(),
+  OTEL_SERVICE_NAME: z.string().optional(),
+  OTEL_SERVICE_VERSION: z.string().optional(),
+  OTEL_DEBUG: booleanish
+} as const;
+
+const clientShape = {
+  NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
+  NEXT_PUBLIC_OTEL_SERVICE_NAME: z.string().optional(),
+  NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional()
+} as const;
+
+const serverRuntimeEnv = {
+  BETTERSTACK_API_KEY: process.env.BETTERSTACK_API_KEY,
+  BETTERSTACK_URL: process.env.BETTERSTACK_URL,
+  SENTRY_ORG: process.env.SENTRY_ORG,
+  SENTRY_PROJECT: process.env.SENTRY_PROJECT,
+  OTEL_EXPORTER_OTLP_ENDPOINT: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+  OTEL_EXPORTER_OTLP_HEADERS: process.env.OTEL_EXPORTER_OTLP_HEADERS,
+  OTEL_SERVICE_NAME: process.env.OTEL_SERVICE_NAME,
+  OTEL_SERVICE_VERSION: process.env.OTEL_SERVICE_VERSION,
+  OTEL_DEBUG: process.env.OTEL_DEBUG
+} as const;
+
+const clientRuntimeEnv = {
+  NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT: process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT,
+  NEXT_PUBLIC_OTEL_SERVICE_NAME: process.env.NEXT_PUBLIC_OTEL_SERVICE_NAME,
+  NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN
+} as const;
+
+const combinedRuntimeEnv = {
+  ...serverRuntimeEnv,
+  ...clientRuntimeEnv
+} as const;
+
+type ServerEnv = ReturnType<typeof createServerEnv>;
+type ClientEnv = ReturnType<typeof createClientEnv>;
+
+const createServerEnv = () =>
   createEnv({
-    server: {
-      BETTERSTACK_API_KEY: z.string().optional(),
-      BETTERSTACK_URL: z.string().url().optional(),
-
-      // Added by Sentry Integration, Vercel Marketplace
-      SENTRY_ORG: z.string().optional(),
-      SENTRY_PROJECT: z.string().optional(),
-
-      OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
-      OTEL_EXPORTER_OTLP_HEADERS: z.string().optional(),
-      OTEL_SERVICE_NAME: z.string().optional(),
-      OTEL_SERVICE_VERSION: z.string().optional(),
-      OTEL_DEBUG: booleanish
-    },
-    client: {
-      NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
-      NEXT_PUBLIC_OTEL_SERVICE_NAME: z.string().optional(),
-      NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional()
-    },
-    runtimeEnv: {
-      BETTERSTACK_API_KEY: process.env.BETTERSTACK_API_KEY,
-      BETTERSTACK_URL: process.env.BETTERSTACK_URL,
-      SENTRY_ORG: process.env.SENTRY_ORG,
-      SENTRY_PROJECT: process.env.SENTRY_PROJECT,
-      OTEL_EXPORTER_OTLP_ENDPOINT: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-      OTEL_EXPORTER_OTLP_HEADERS: process.env.OTEL_EXPORTER_OTLP_HEADERS,
-      OTEL_SERVICE_NAME: process.env.OTEL_SERVICE_NAME,
-      OTEL_SERVICE_VERSION: process.env.OTEL_SERVICE_VERSION,
-      OTEL_DEBUG: process.env.OTEL_DEBUG,
-      NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT:
-        process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT,
-      NEXT_PUBLIC_OTEL_SERVICE_NAME: process.env.NEXT_PUBLIC_OTEL_SERVICE_NAME,
-      NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN
-    }
+    server: serverShape,
+    client: clientShape,
+    runtimeEnv: combinedRuntimeEnv
   });
+
+const createClientEnv = () =>
+  createEnv({
+    server: clientShape,
+    runtimeEnv: clientRuntimeEnv
+  });
+
+let cachedServerEnv: ServerEnv | null = null;
+let cachedClientEnv: ClientEnv | null = null;
+
+export const keysServer = (): ServerEnv => {
+  if (typeof window !== "undefined") {
+    throw new Error("keysServer() may only be invoked in a server runtime.");
+  }
+  if (!cachedServerEnv) {
+    cachedServerEnv = createServerEnv();
+  }
+  return cachedServerEnv;
+};
+
+export const keysClient = (): ClientEnv => {
+  if (!cachedClientEnv) {
+    cachedClientEnv = createClientEnv();
+  }
+  return cachedClientEnv;
+};

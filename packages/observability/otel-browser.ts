@@ -1,6 +1,6 @@
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import { keys } from "./keys";
+import { keysClient } from "./keys";
 
 let initialized = false;
 
@@ -9,7 +9,7 @@ export const initializeBrowserTelemetry = async () => {
     return;
   }
 
-  const env = keys();
+  const env = keysClient();
 
   const [
     { WebTracerProvider },
@@ -37,10 +37,7 @@ export const initializeBrowserTelemetry = async () => {
   });
 
   const exporter = new OTLPTraceExporter({
-    url:
-      env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT ??
-      env.OTEL_EXPORTER_OTLP_ENDPOINT ??
-      "http://localhost:4318/v1/traces"
+    url: env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT ?? "http://localhost:4318/v1/traces"
   });
 
   provider.addSpanProcessor(new BatchSpanProcessor(exporter));

@@ -55,11 +55,15 @@ export function createEnv<TServer extends ZodShape, TClient extends ZodShape | u
   return { ...serverEnv, ...clientEnv } as InferShape<TServer> & ClientInfer<TClient>;
 }
 
-const schema = z.object({
-  NODE_ENV: z.enum(["development","test","staging","production"]).default("development"),
+const serverShape = {
+  NODE_ENV: z.enum(["development", "test", "staging", "production"]).default("development"),
   REDIS_URL: z.string().url().optional(),
   OTLP_ENDPOINT: z.string().url().optional()
-});
+} as const;
 
-export const env = schema.parse(process.env);
-export const env = schema.parse(process.env);
+export const schema = z.object(serverShape);
+
+export const env = createEnv({
+  server: serverShape,
+  runtimeEnv: process.env
+});

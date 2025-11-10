@@ -24,6 +24,8 @@ resource "aws_rds_cluster" "this" {
   iam_database_authentication_enabled = true
   storage_encrypted                   = true
   enable_http_endpoint                = true
+  kms_key_id                          = var.kms_key_arn
+  deletion_protection                 = var.deletion_protection
 
   serverlessv2_scaling_configuration {
     max_capacity = 4
@@ -41,5 +43,7 @@ resource "aws_rds_cluster_instance" "this" {
   engine              = aws_rds_cluster.this.engine
   engine_version      = aws_rds_cluster.this.engine_version
   publicly_accessible = false
-  tags                = var.tags
+  auto_minor_version_upgrade = true
+  kms_key_id                 = var.kms_key_arn
+  tags                       = var.tags
 }

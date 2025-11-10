@@ -15,6 +15,19 @@ resource "aws_s3_bucket" "assets" {
     enabled = true
   }
 
+  lifecycle_rule {
+    id      = "cleanup-old-artifacts"
+    enabled = true
+
+    noncurrent_version_expiration {
+      days = 90
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -53,7 +66,6 @@ data "aws_iam_policy_document" "bucket" {
     }
 
     condition {
-      test     = "StringLike"
       test     = "StringEquals"
       variable = "AWS:SourceArn"
       values   = ["arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/*"]

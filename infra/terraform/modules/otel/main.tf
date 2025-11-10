@@ -38,19 +38,12 @@ processors:
 exporters:
   logging:
     loglevel: warn
-  otlphttp/grafana:
-    endpoint: ${var.grafana_endpoint}
-    tls:
-      insecure: true
+    otlphttp/grafana:
+      endpoint: ${var.grafana_endpoint}
+      tls:
+        insecure: ${var.grafana_skip_verify}
   prometheusremotewrite:
     endpoint: ${var.prometheus_remote_write}
-
-connectors:
-  spanmetrics:
-    metrics_flush_interval: 15s
-    dimensions:
-      - name: http.method
-      - name: http.route
 
 service:
   telemetry:
@@ -103,6 +96,16 @@ resource "helm_release" "collector" {
       }]
       nodeSelector = {
         "kubernetes.io/os" = "linux"
+      }
+      resources = {
+        requests = {
+          cpu    = "100m"
+          memory = "256Mi"
+        }
+        limits = {
+          cpu    = "500m"
+          memory = "512Mi"
+        }
       }
     })
   ]
