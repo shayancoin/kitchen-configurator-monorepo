@@ -56,7 +56,7 @@ def _build_pipeline() -> RAGPipeline:
     """
     Constructs and returns a configured RAGPipeline based on current application settings.
     
-    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist before and after pipeline construction for modifying embedding/vector-store strategy and post-reranker tracing.
+    The pipeline is built by creating an embedder, inferring its embedding dimension, initializing a vector store with that dimension, selecting an LLM, and setting the pipeline's default result count and generator label. The generator label is "echo" when the selected LLM is an EchoLLM, otherwise "openai". Extension hooks exist after component construction (post-store, pre-pipeline) and after pipeline construction for injecting custom logic or tracing.
     
     Returns:
         RAGPipeline: A pipeline configured with the application's vector store, embedder, LLM, default_k, and generator_label.
