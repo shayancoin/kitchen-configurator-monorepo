@@ -35,6 +35,11 @@ const headers = {
   Accept: "application/json"
 };
 
+/**
+ * Runs a K6 smoke test that exercises the configurator preview and GraphQL endpoints, records related performance metrics, and asserts basic response correctness.
+ *
+ * The function issues a GET to the configurator preview and records TTFB, then issues a POST to the GraphQL endpoint and records request duration. It also performs checks that the preview returns HTTP 200 and a sufficiently populated body, and that the GraphQL response returns HTTP 200 with a truthy `data` field and no reported errors. Finally, it sleeps for a configurable duration.
+ */
 export default function smoke() {
   const previewResponse = http.get(`${baseUrl}/${locale}/configurator`, {
     tags: { name: "ConfiguratorPreview" }
